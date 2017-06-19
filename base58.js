@@ -17,8 +17,7 @@ function decodeFromBase58(number) {
   return number.split('').reverse()
     .reduce((decimalValue, digit, index) =>
       decimalValue + (alphabet.indexOf(digit) * (base ** index))
-      , 0)
-    .toString();
+      , 0);
 }
 
 module.exports = {
