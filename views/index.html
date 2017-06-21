@@ -1,12 +1,14 @@
-<!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>ShortEn|Url Shortener</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <link href="/static/css/index.css" rel="stylesheet">
+    <script src="/static/js/shorten.js"></script>
+
+    <title>ShortEn|Url Shortener</title>
 </head>
 <body>
 <div class="container">
@@ -14,14 +16,14 @@
         <span class="glyphicon glyphicon-link col-lg-12"></span>
         <h1 class="col-lg-12">Shorten Your Link with ShortEn</h1>
 
-        <div class="input-group col-lg-12">
-            <input type="text" class="form-control" placeholder="Paste a link to shorten it"
+        <div class="input-group col-lg-8 col-lg-offset-2">
+            <input type="text" class="original-url" id="original-url" placeholder="Paste a link to shorten it"
                    aria-describedby="basic-addon2">
-            <span class="input-group-addon" id="basic-addon2">SHORTEN</span>
+            <button class="shorten-button btn-primary" id="shorten-button">SHORTEN</button>
         </div>
 
         <div class="shortenedLink col-lg-12">
-            <div class="link"></div>
+            <div id="shortened-url"></div>
         </div>
     </div>
 </div>
