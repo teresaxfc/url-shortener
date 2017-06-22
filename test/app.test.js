@@ -19,7 +19,7 @@ describe('url shortener service test', () => {
     const result = request(app).post('/api/shorten');
 
     return result
-      .expect(400)
+      .expect(400);
   });
 
   it('should return exited shortened url when given a saved original url', () => {
@@ -27,11 +27,11 @@ describe('url shortener service test', () => {
 
     const result = request(app)
       .post('/api/shorten')
-      .send({url: originalUrl});
+      .send({ originalUrl: originalUrl });
 
     return result
       .expect(200)
-      .then((response) => request(app).get(`/${response.body.id}`).expect(302))
+      .then(response => request(app).get(`/${response.body.id}`).expect(302))
       .then((response) => {
         expect(response.header.location).equals(originalUrl);
       });
