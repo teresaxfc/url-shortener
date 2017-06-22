@@ -30,8 +30,9 @@ app.post('/api/shorten', function (request, response) {
 
   Url.findOne({original_url: original_url}, function (err, doc) {
     if (doc) {
-      shortened_url = config.webhost + base58.encodeToBase58(doc._id);
-      response.send({'shortUrl': shortened_url});
+      const base58Id = base58.encodeToBase58(doc._id);
+      shortened_url = config.webhost + base58Id;
+      response.send({"shortened_url": shortened_url,'id':base58Id});
     } else {
       const newUrl = Url({original_url: original_url});
       newUrl.save(function (err) {
@@ -39,8 +40,9 @@ app.post('/api/shorten', function (request, response) {
           console.log(err);
         }
 
-        shortened_url = config.webhost + base58.encodeToBase58(newUrl._id);
-        response.send({'shortUrl': shortened_url});
+        const base58Id = base58.encodeToBase58(newUrl._id);
+        shortened_url = config.webhost + base58Id;
+        response.send({"shortened_url": shortened_url,'id':base58Id});
       });
     }
   });
@@ -48,9 +50,9 @@ app.post('/api/shorten', function (request, response) {
 
 app.get('/:shortened_url', function (request, response) {
   const base58Id = request.params.shortened_url;
-  const id = base58.decodeFromBase58(base58Id);
+  const decimalId = base58.decodeFromBase58(base58Id);
 
-  Url.findOne({_id: id}, function (err, doc) {
+  Url.findOne({_id: decimalId}, function (err, doc) {
     if (doc) {
       response.redirect(doc.original_url);
     } else {
@@ -60,3 +62,5 @@ app.get('/:shortened_url', function (request, response) {
 });
 
 app.listen(8080);
+
+module.exports = app;

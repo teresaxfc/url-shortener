@@ -14,7 +14,9 @@
     "eslint": "^4.0.0",
     "eslint-config-airbnb-base": "^11.2.0",
     "eslint-plugin-import": "^2.3.0",
-    "mocha": "^3.4.2"
+    "mocha": "^3.4.2",
+    "supertest": "^3.0.0",
+    "supertest-as-promised": "^4.0.2"
   },
   "scripts": {
     "check": "eslint .",
