@@ -27,7 +27,7 @@ describe('url shortener service test', () => {
 
     const result = request(app)
       .post('/api/shorten')
-      .send({ originalUrl: originalUrl });
+      .send({ originalUrl });
 
     return result
       .expect(200)

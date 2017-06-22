@@ -15,7 +15,7 @@ const urlSchema = new Schema({
   created_at: Date,
 });
 
-urlSchema.pre('save', function (next) {
+urlSchema.pre('save', (next) => {
   const doc = this;
   Counter.findByIdAndUpdate({ _id: 'url_count' }, { $inc: { seq: 1 } }, (error, counter) => {
     if (error) {
@@ -24,7 +24,7 @@ urlSchema.pre('save', function (next) {
 
     doc._id = counter.seq;
     doc.created_at = new Date();
-    next();
+    return next();
   });
 });
 
