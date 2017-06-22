@@ -20,37 +20,37 @@ app.get('/', (request, response) => {
 });
 
 app.post('/api/shorten', function (request, response) {
-    const longUrl = request.body.url;
-  let shortUrl = '';
+  const original_url = request.body.url;
+  let shortened_url = '';
 
-  if(!longUrl){
+  if (!original_url) {
     response.status(400).send();
     return;
   }
 
-  Url.findOne({original_url: longUrl}, function (err, doc) {
+  Url.findOne({original_url: original_url}, function (err, doc) {
     if (doc) {
-      shortUrl = config.webhost + base58.encodeToBase58(doc._id);
-      response.send({'shortUrl': shortUrl});
+      shortened_url = config.webhost + base58.encodeToBase58(doc._id);
+      response.send({'shortUrl': shortened_url});
     } else {
-      const newUrl = Url({original_url: longUrl});
+      const newUrl = Url({original_url: original_url});
       newUrl.save(function (err) {
         if (err) {
           console.log(err);
         }
 
-        shortUrl = config.webhost + base58.encodeToBase58(newUrl._id);
-        response.send({'shortUrl': shortUrl});
+        shortened_url = config.webhost + base58.encodeToBase58(newUrl._id);
+        response.send({'shortUrl': shortened_url});
       });
     }
   });
 });
 
-app.get('/:shortened_url', function(request, response){
+app.get('/:shortened_url', function (request, response) {
   const base58Id = request.params.shortened_url;
   const id = base58.decodeFromBase58(base58Id);
 
-  Url.findOne({_id: id}, function (err, doc){
+  Url.findOne({_id: id}, function (err, doc) {
     if (doc) {
       response.redirect(doc.original_url);
     } else {

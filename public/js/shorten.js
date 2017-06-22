@@ -10,6 +10,11 @@ $(document).ready(function () {
           + data.shortUrl + '</a>';
         $('#shortened-url').html(resultHTML);
         $('#shortened-url').hide().fadeIn('slow');
+      },
+      error: function () {
+        const errorMessage = '<p class="error-message">An error occurred shortening that link.</p>';
+        $('#shortened-url').html(errorMessage);
+        $('#shortened-url').hide().fadeIn('slow');
       }
     });
   });
