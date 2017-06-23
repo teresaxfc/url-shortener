@@ -33,7 +33,6 @@ app.post('/api/shorten', (request, response) => {
 
   Url.findOne({ originalUrl }, (err, doc) => {
     if (doc) {
-      /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }]*/
       const base58Id = base58.encodeToBase58(doc._id);
       shortenedUrl = config.webhost + base58Id;
       response.send({ shortenedUrl, id: base58Id });
