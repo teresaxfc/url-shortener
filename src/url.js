@@ -22,6 +22,7 @@ urlSchema.pre('save', (next) => {
       return next(error);
     }
 
+    /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }]*/
     doc._id = counter.seq;
     doc.created_at = new Date();
     return next();

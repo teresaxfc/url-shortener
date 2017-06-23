@@ -21,7 +21,7 @@ app.get('/', (request, response) => {
 
 app.post('/api/shorten', (request, response) => {
   const originalUrl = request.body.originalUrl;
-  let shortened_url = '';
+  let shortenedUrl = '';
 
   if (!originalUrl) {
     response.status(400).send();
@@ -30,28 +30,30 @@ app.post('/api/shorten', (request, response) => {
 
   Url.findOne({ originalUrl }, (err, doc) => {
     if (doc) {
+      /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }]*/
       const base58Id = base58.encodeToBase58(doc._id);
-      shortened_url = config.webhost + base58Id;
-      response.send({ shortened_url, id: base58Id });
+      shortenedUrl = config.webhost + base58Id;
+      response.send({ shortenedUrl, id: base58Id });
     } else {
       const newUrl = Url({ originalUrl });
-      newUrl.save((err) => {
-        if (err) {
-          console.log(err);
+      newUrl.save((error) => {
+        if (error) {
+          /* eslint no-console: ["error", { allow: ["log"] }] */
+          console.log(error);
           response.status(500).send();
           return;
         }
 
         const base58Id = base58.encodeToBase58(newUrl._id);
-        shortened_url = config.webhost + base58Id;
-        response.send({ shortened_url, id: base58Id });
+        shortenedUrl = config.webhost + base58Id;
+        response.send({ shortenedUrl, id: base58Id });
       });
     }
   });
 });
 
-app.get('/:shortened_url', (request, response) => {
-  const base58Id = request.params.shortened_url;
+app.get('/:shortenedUrl', (request, response) => {
+  const base58Id = request.params.shortenedUrl;
   const decimalId = base58.decodeFromBase58(base58Id);
 
   Url.findOne({ _id: decimalId }, (err, doc) => {

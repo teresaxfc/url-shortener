@@ -6,8 +6,8 @@ $(document).ready(() => {
       dataType: 'JSON',
       data: { originalUrl: $('#original-url').val() },
       success(data) {
-        const resultHTML = `<a class="result" href="${data.shortened_url}">${
-          data.shortened_url}</a>`;
+        const resultHTML = `<a class="result" href="${data.shortenedUrl}">${
+          data.shortenedUrl}</a>`;
         $('#shortened-url').html(resultHTML);
         $('#shortened-url').hide().fadeIn('slow');
       },
