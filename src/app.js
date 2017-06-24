@@ -1,15 +1,12 @@
 const express = require('express');
 const ejs = require('ejs');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
 const config = require('./config');
 const base58 = require('./base58.js');
 const Url = require('./url');
 const Logger = require('./Logger');
 
 const logger = new Logger();
-
-mongoose.connect(`mongodb://${config.db.host}/${config.db.name}`);
 
 const app = express();
 app.set('views', `${__dirname}/../views`);

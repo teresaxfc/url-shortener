@@ -1,13 +1,20 @@
 const mongoose = require('mongoose');
+const Logger = require('./Logger');
+const Bluebird = require('bluebird');
+const config = require('./config');
 
+mongoose.Promise = global.Promise;
+const db = mongoose.createConnection(`mongodb://${config.db.host}/${config.db.name}`,{ promiseLibrary: Bluebird });
+
+const logger = new Logger();
 const Schema = mongoose.Schema;
 
-const CounterSchema = Schema({
+const CounterSchema = new Schema({
   _id: { type: String, required: true },
   seq: { type: Number, default: 0 },
 });
 
-const Counter = mongoose.model('counter', CounterSchema);
+const Counter = db.model('counter', CounterSchema);
 
 const urlSchema = new Schema({
   _id: { type: Number, index: true },
@@ -15,10 +22,11 @@ const urlSchema = new Schema({
   created_at: Date,
 });
 
-urlSchema.pre('save', (next) => {
+urlSchema.pre('save', function (next) {
   const doc = this;
   Counter.findByIdAndUpdate({ _id: 'url_count' }, { $inc: { seq: 1 } }, (error, counter) => {
     if (error) {
+      logger.fatal('Failed to generate url id', {error});
       return next(error);
     }
 
@@ -28,6 +36,6 @@ urlSchema.pre('save', (next) => {
   });
 });
 
-const Url = mongoose.model('Url', urlSchema);
+const Url = db.model('Url', urlSchema);
 
 module.exports = Url;
