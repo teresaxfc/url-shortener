@@ -5,9 +5,9 @@ const mongoose = require('mongoose');
 const config = require('./config');
 const base58 = require('./base58.js');
 const Url = require('./url');
-const bunyan = require('bunyan');
+const Logger = require('./Logger');
 
-const logger = bunyan.createLogger({ name: 'url-shortener' });
+const logger = new Logger();
 
 mongoose.connect(`mongodb://${config.db.host}/${config.db.name}`);
 
@@ -40,10 +40,12 @@ app.post('/api/shorten', (request, response) => {
       const newUrl = Url({ originalUrl });
       newUrl.save((error) => {
         if (error) {
-          logger.warn({ error }, 'failed to save url');
+          logger.fatal('failed to save url', { error });
           response.status(500).send();
           return;
         }
+
+        logger.info('Saved a new url', {url: newUrl});
 
         const base58Id = base58.encodeToBase58(newUrl._id);
         shortenedUrl = config.webhost + base58Id;
