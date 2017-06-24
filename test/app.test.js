@@ -22,8 +22,23 @@ describe('url shortener service test', () => {
       .expect(400);
   });
 
-  it('should return exited shortened url when given a saved original url', () => {
+  it('should return exited shortened url when given an existing url', () => {
     const originalUrl = 'http://mongoosejs.com/docs/promises.html';
+
+    const result = request(app)
+      .post('/api/shorten')
+      .send({ originalUrl });
+
+    return result
+      .expect(200)
+      .then(response => request(app).get(`/${response.body.id}`).expect(302))
+      .then((response) => {
+        expect(response.header.location).equals(originalUrl);
+      });
+  });
+
+  it('should create new shortened url when given a non-existing url', () => {
+    const originalUrl = `http://mongoosejs.com/docs/promises.html?time=${new Date().getTime()}`;
 
     const result = request(app)
       .post('/api/shorten')
