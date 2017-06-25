@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Logger = require('./Logger');
+const Logger = require('./lib/Logger');
 const Bluebird = require('bluebird');
 const config = require('./config');
 

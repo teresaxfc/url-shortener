@@ -3,10 +3,12 @@ const ejs = require('ejs');
 const bodyParser = require('body-parser');
 const config = require('./config');
 const base58 = require('./base58.js');
-const Url = require('./url');
-const Logger = require('./Logger');
+const Logger = require('./lib/Logger');
+const UrlService = require('./lib/UrlService');
+const NotFoundError = require('./lib/NotFoundError');
 
 const logger = new Logger();
+const urlService = new UrlService();
 
 const app = express();
 app.set('views', `${__dirname}/../views`);
@@ -21,48 +23,34 @@ app.get('/', (request, response) => {
 
 app.post('/api/shorten', (request, response) => {
   const originalUrl = request.body.originalUrl;
-  let shortenedUrl = '';
 
   if (!originalUrl) {
     response.status(400).send();
     return;
   }
 
-  Url.findOne({ originalUrl }, (err, doc) => {
-    if (doc) {
-      const base58Id = base58.encodeToBase58(doc._id);
-      shortenedUrl = config.webhost + base58Id;
-      response.send({ shortenedUrl, id: base58Id });
-    } else {
-      const newUrl = Url({ originalUrl });
-      newUrl.save((error) => {
-        if (error) {
-          logger.fatal('failed to save url', { error });
-          response.status(500).send();
-          return;
-        }
-
-        logger.info('Saved a new url', {url: newUrl});
-
-        const base58Id = base58.encodeToBase58(newUrl._id);
-        shortenedUrl = config.webhost + base58Id;
-        response.send({ shortenedUrl, id: base58Id });
-      });
-    }
-  });
+  urlService.getOrCreateByOriginalUrl(originalUrl)
+    .then(url => base58.encodeToBase58(url._id))
+    .then(base58Id => response.send({
+      shortenedUrl: config.webhost + base58Id,
+      id: base58Id }))
+    .catch(err => {
+      logger.fatal('failed to save url', { err });
+      response.status(500).send();
+    });
 });
 
 app.get('/:shortenedUrl', (request, response) => {
   const base58Id = request.params.shortenedUrl;
   const decimalId = base58.decodeFromBase58(base58Id);
 
-  Url.findOne({ _id: decimalId }, (err, doc) => {
-    if (doc) {
-      response.redirect(doc.originalUrl);
-    } else {
-      response.redirect(config.webhost);
-    }
-  });
+  urlService.findById(decimalId)
+    .then(url => response.redirect(url.originalUrl))
+    .catch(NotFoundError, () => response.redirect(config.webhost))
+    .catch(err => {
+      logger.fatal('failed to find url', { err });
+      response.status(500).send();
+    } );
 });
 
 app.listen(8080);
