@@ -1,7 +1,16 @@
-#original-url {
-    width: 100%;
-    margin-right: 1em;
+h1.title {
+    margin-top: 2em;
+    font-size: 4em;
 }
 
-div.shorten-button {
+input#original-url {
+    margin-top: 2em;
+    width: 35em;
+    height: 3em;
+    font-size: 1.2em;
+}
+
+button#shorten-button {
+    margin-top: 2.4em;
+    padding: 1em 1.5em;
 }

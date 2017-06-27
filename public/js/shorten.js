@@ -1,22 +1,25 @@
 $(document).ready(() => {
   $('#shorten-button').on('click', () => {
-    $.ajax({
-      url: '/api/shorten',
-      type: 'POST',
-      dataType: 'JSON',
-      data: { originalUrl: $('#original-url').val() },
-      success(data) {
-        const resultHTML = `<a class="result" href="${data.shortenedUrl}">${
-          data.shortenedUrl}</a>`;
-        $('#shortened-url').html(resultHTML);
-        $('#shortened-url').hide().fadeIn('slow');
-      },
-      error() {
-        const errorMessage = '<p class="error-message">An error occurred shortening that link.</p>';
-        $('#shortened-url').html(errorMessage);
-        $('#shortened-url').hide().fadeIn('slow');
-      },
-    });
+    const inputUrl = $('#original-url').val();
+
+    if (inputUrl.indexOf('localhost') < 0) {
+      $.ajax({
+        url: '/api/shorten',
+        type: 'POST',
+        dataType: 'JSON',
+        data: { originalUrl: inputUrl },
+        success(data) {
+          const shortenedUrl = `${data.shortenedUrl}`;
+          $('#original-url').val(shortenedUrl);
+        },
+        error() {
+          const errorMessage = 'An error occurred shortening that link.';
+          $('#original-url').val(errorMessage);
+        },
+      });
+    }
+
+    $('#original-url').val(inputUrl);
   });
 });
 

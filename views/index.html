@@ -12,20 +12,20 @@
 </head>
 <body>
 <div class="container">
-    <div class="row">
-        <span class="glyphicon glyphicon-link col-lg-12"></span>
-        <h1 class="col-lg-12">Shorten Your Link with ShortEn</h1>
+    <h2 class="header">ShortEn</h2>
 
-        <div class="input-group col-lg-8 col-lg-offset-2">
-            <input type="text" class="original-url" id="original-url" placeholder="Paste a link to shorten it"
-                   aria-describedby="url-field">
-            <button class="shorten-button btn-primary" id="shorten-button">SHORTEN</button>
-        </div>
+    <h1 class="title text-center">Shorten Your Link with ShortEn</h1>
 
-        <div class="shortenedLink col-lg-12">
-            <div id="shortened-url"></div>
+    <form class="form-inline text-center">
+        <div class="form-group">
+            <label for="original-url" class="sr-only">Url</label>
+            <div class="col-lg-10">
+                <input type="text" class="form-control" id="original-url"
+                       placeholder="Paste a link to shorten it">
+            </div>
         </div>
-    </div>
+        <button type="button" class="btn btn-primary" id="shorten-button">SHORTEN</button>
+    </form>
 </div>
 </body>
 </html>
