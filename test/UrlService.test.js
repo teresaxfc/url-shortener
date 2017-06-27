@@ -1,13 +1,13 @@
 const chai = require('chai');
 const UrlService = require('../src/lib/UrlService');
 const CounterRepository = require('../src/lib/CounterRepository');
-const NotFoundError = require('../src/lib/NotFoundError');
 
 const expect = chai.expect;
-const urlService = new UrlService();
-const counterRepository = new CounterRepository();
 
 describe('UrlService test', () => {
+  const urlService = new UrlService();
+  const counterRepository = new CounterRepository();
+
   it('Should return existing url when giving an existing url', () => {
     const originalUrl = 'http://mongoosejs.com/docs/promises.html';
 
@@ -32,7 +32,7 @@ describe('UrlService test', () => {
     const id = 'not exist';
 
     return urlService.findById(id)
-      .then(result => chai.assert(false, `Could not find url by id: ${id}`))
-      .catch(error => expect(error.message).equals(`Could not find url by id: ${id}`))
+      .then(() => chai.assert(false, `Could not find url by id: ${id}`))
+      .catch(error => expect(error.message).equals(`Could not find url by id: ${id}`));
   });
 });
