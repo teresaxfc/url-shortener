@@ -4,7 +4,7 @@ const Bluebird = require('bluebird');
 const config = require('./config');
 
 mongoose.Promise = global.Promise;
-const db = mongoose.createConnection(`mongodb://${config.db.host}/${config.db.name}`,{ promiseLibrary: Bluebird });
+const db = mongoose.createConnection(`mongodb://${config.db.host}/${config.db.name}`, { promiseLibrary: Bluebird });
 
 const logger = new Logger();
 const Schema = mongoose.Schema;
@@ -26,7 +26,7 @@ urlSchema.pre('save', function (next) {
   const doc = this;
   Counter.findByIdAndUpdate({ _id: 'url_count' }, { $inc: { seq: 1 } }, (error, counter) => {
     if (error) {
-      logger.fatal('Failed to generate url id', {error});
+      logger.fatal('Failed to generate url id', { error });
       return next(error);
     }
 

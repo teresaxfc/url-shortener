@@ -1,8 +1,8 @@
 const mongo = require('mongodb').MongoClient;
-const Bluebird = require("bluebird");
+const Bluebird = require('bluebird');
 const config = require('../config');
 
-const url = `mongodb://${config.db.host}/${config.db.name}`;
+const hostUrl = `mongodb://${config.db.host}/${config.db.name}`;
 
 class UrlRepository {
   constructor() {
@@ -25,7 +25,7 @@ class UrlRepository {
       return Bluebird.resolve(this.collection);
     }
 
-    return mongo.connect(url, {promiseLibrary: Bluebird})
+    return mongo.connect(hostUrl, { promiseLibrary: Bluebird })
       .then(db => db.collection('urls'))
       .tap(collection => this.collection = collection);
   }

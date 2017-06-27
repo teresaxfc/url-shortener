@@ -1,5 +1,5 @@
 const mongo = require('mongodb').MongoClient;
-const Bluebird = require("bluebird");
+const Bluebird = require('bluebird');
 const config = require('../config');
 
 const url = `mongodb://${config.db.host}/${config.db.name}`;
@@ -14,14 +14,14 @@ class CounterRepository {
       return Bluebird.resolve(this.collection);
     }
 
-    return mongo.connect(url, {promiseLibrary: Bluebird})
+    return mongo.connect(url, { promiseLibrary: Bluebird })
       .then(db => db.collection('counters'))
       .tap(collection => this.collection = collection);
   }
 
   nextId() {
     return this.getCollection()
-      .then(collection => collection.findOneAndUpdate({_id: 'url_count'}, {$inc: {seq: 1}}, {returnNewDocument: true}))
+      .then(collection => collection.findOneAndUpdate({ _id: 'url_count' }, { $inc: { seq: 1 } }, { returnNewDocument: true }))
       .then(result => result.value.seq);
   }
 }

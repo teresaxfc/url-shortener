@@ -12,17 +12,17 @@ class UrlService {
   }
 
   getOrCreateByOriginalUrl(originalUrl) {
-    return this.urlRepository.findOne({originalUrl})
+    return this.urlRepository.findOne({ originalUrl })
       .then(url => url || this.createNewUrl(originalUrl));
   }
 
   createNewUrl(originalUrl) {
     return this.counterRepository.nextId()
-      .then(id => this.urlRepository.save({_id: id, originalUrl, created_at: new Date()}));
+      .then(id => this.urlRepository.save({ _id: id, originalUrl, created_at: new Date() }));
   }
 
   findById(id) {
-    return this.urlRepository.findOne({_id: id})
+    return this.urlRepository.findOne({ _id: id })
       .then(url => url || Bluebird.reject(new NotFoundError(`Could not find url by id: ${id}`)));
   }
 }

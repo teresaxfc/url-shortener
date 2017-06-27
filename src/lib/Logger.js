@@ -11,11 +11,11 @@ class Logger {
     this.logger = parentLogger.child(metadata);
   }
 
-  info(message, meta={}) {
+  info(message, meta = {}) {
     this.logger.info(meta, message);
   }
 
-  fatal(message, meta={}) {
+  fatal(message, meta = {}) {
     this.logger.fatal(meta, message);
   }
 }
