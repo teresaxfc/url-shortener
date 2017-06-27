@@ -13,7 +13,7 @@ const urlService = new UrlService();
 const app = express();
 app.set('views', `${__dirname}/../views`);
 app.engine('html', ejs.renderFile);
-app.use('/static', express.static('public'));
+app.use('/static', express.static('../public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -34,7 +34,7 @@ app.post('/api/shorten', (request, response) => {
     .then(base58Id => response.send({
       shortenedUrl: config.webhost + base58Id,
       id: base58Id }))
-    .catch(err => {
+    .catch((err) => {
       logger.fatal('failed to save url', { err });
       response.status(500).send();
     });
@@ -47,12 +47,13 @@ app.get('/:shortenedUrl', (request, response) => {
   urlService.findById(decimalId)
     .then(url => response.redirect(url.originalUrl))
     .catch(NotFoundError, () => response.redirect(config.webhost))
-    .catch(err => {
+    .catch((err) => {
       logger.fatal('failed to find url', { err });
       response.status(500).send();
-    } );
+    });
 });
 
 app.listen(8080);
 
 module.exports = app;
+
