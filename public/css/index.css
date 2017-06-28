@@ -1,16 +1,38 @@
 h1.title {
-    margin-top: 2em;
-    font-size: 4em;
+    margin-top: 2.2em;
+    font-size: 4.5em;
 }
 
-input#original-url {
+div.form-group {
+    position: relative;
+}
+
+div.copied-url {
+    position: absolute;
+    top: 0.6em;
+    left: 2em;
+}
+
+input#url-field {
     margin-top: 2em;
     width: 35em;
     height: 3em;
+    padding-right: 50px;
     font-size: 1.2em;
 }
 
-button#shorten-button {
+input#copy-button {
+    margin-left: -50px;
+    height: 3.1em;
+    width: 50px;
+    background: blue;
+    color: white;
+    border: 0;
+    -webkit-appearance: none;
+}
+
+button#shorten-button, #copy-button {
     margin-top: 2.4em;
     padding: 1em 1.5em;
 }
+
