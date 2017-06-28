@@ -7,6 +7,7 @@
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <link href="/static/css/index.css" rel="stylesheet">
     <script src="/static/js/shorten.js"></script>
+    <script src="/static/js/copyUrl.js"></script>
 
     <title>ShortEn|Url Shortener</title>
 </head>
@@ -18,13 +19,15 @@
 
     <form class="form-inline text-center">
         <div class="form-group">
-            <label for="original-url" class="sr-only">Url</label>
+            <label for="url-field" class="sr-only">Url</label>
             <div class="col-lg-10">
-                <input type="text" class="form-control" id="original-url"
+                <input type="text" class="form-control" id="url-field"
                        placeholder="Paste a link to shorten it">
+                <div class="copied-url"></div>
             </div>
         </div>
         <button type="button" class="btn btn-primary" id="shorten-button">SHORTEN</button>
+        <button type="button" class="btn btn-success" id="copy-button">COPY</button>
     </form>
 </div>
 </body>
