@@ -1,6 +1,6 @@
 $(document).ready(() => {
   $('#shorten-button').on('click', () => {
-    const inputUrl = $('#original-url').val();
+    const inputUrl = $('#url-field').val();
 
     if (inputUrl.indexOf('localhost') < 0) {
       $.ajax({
@@ -10,16 +10,16 @@ $(document).ready(() => {
         data: { originalUrl: inputUrl },
         success(data) {
           const shortenedUrl = `${data.shortenedUrl}`;
-          $('#original-url').val(shortenedUrl);
+          $('#url-field').val(shortenedUrl);
         },
         error() {
           const errorMessage = 'An error occurred shortening that link.';
-          $('#original-url').val(errorMessage);
+          $('#url-field').attr("placeholder", errorMessage);
         },
       });
     }
 
-    $('#original-url').val(inputUrl);
+    $('#url-field').val(inputUrl);
   });
 });
 
