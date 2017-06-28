@@ -1,3 +1,12 @@
+body {
+    background-image:url('../IMG_0428-1.jpg') ;
+}
+
+/*div.container {*/
+    /*height: 100%;*/
+    /*background-image:url('../DSC00938-1.jpg') ;*/
+/*}*/
+
 h1.title {
     margin-top: 2.2em;
     font-size: 4.5em;
