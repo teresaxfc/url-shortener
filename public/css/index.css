@@ -32,13 +32,9 @@ header h2 {
     padding: 0.4em 0 0 1em;
 }
 
-h2.header {
-    margin: 0;
-}
-
-a.title {
-    margin-left: 4em;
-    font-size: 4.5em;
+h2.shorten-logo {
+    margin: 0.4em 0 0 5.5em;
+    font-size: 3em;
     float: left;
 }
 
@@ -46,14 +42,14 @@ div.button-wrap {
     display: block;
     float: right;
     margin-right: 18em;
-    margin-top: 1em;
+    margin-top: 1.2em;
 }
 
-a.login {
+button.login-button {
     font-size: 1.4em;
 }
 
-a.signout {
+button.signup-button {
     font-size: 1.4em;
 }
 
