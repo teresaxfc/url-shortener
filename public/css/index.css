@@ -42,7 +42,7 @@ div.button-wrap {
     display: block;
     float: right;
     margin-right: 18em;
-    margin-top: 1.2em;
+    margin-top: 1.5em;
 }
 
 button.login-button {
@@ -54,7 +54,7 @@ button.signup-button {
 }
 
 div.jumbotron {
-    margin-top: 4em;
+    margin-top: 6em;
 }
 
 div.form-group {
