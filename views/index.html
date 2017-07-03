@@ -12,23 +12,34 @@
     <title>ShortEn|Url Shortener</title>
 </head>
 <body>
-<div class="container">
-    <h2 class="header">ShortEn</h2>
+<div class="container-fluid">
+    <header>
+        <h2 class="header">ShortEn</h2>
+    </header>
+</div>
+<div id="container" class="background">
+    <div class="container">
+        <div class="jumbotron">
+            <h1 class="title text-center">Shorten Your Link with ShortEn</h1>
 
-    <h1 class="title text-center">Shorten Your Link with ShortEn</h1>
-
-    <form class="form-inline text-center">
-        <div class="form-group">
-            <label for="url-field" class="sr-only">Url</label>
-            <div class="col-lg-10">
-                <input type="text" class="form-control" id="url-field"
-                       placeholder="Paste a link to shorten it">
-                <div class="copied-url"></div>
-            </div>
+            <form class="form-inline text-center">
+                <div class="form-group">
+                    <label for="url-field" class="sr-only">Url</label>
+                    <div class="col-lg-10">
+                        <input type="text" class="form-control" id="url-field"
+                               placeholder="Paste a link to shorten it">
+                        <div class="copied-url"></div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary" id="shorten-button">SHORTEN</button>
+                <button type="button" class="btn btn-success" id="copy-button">COPY</button>
+            </form>
         </div>
-        <button type="button" class="btn btn-primary" id="shorten-button">SHORTEN</button>
-        <button type="button" class="btn btn-success" id="copy-button">COPY</button>
-    </form>
+    </div>
+</div>
+
+<div class="footer">
+    <p>Copyright © 2017 Teresa. All rights reserved.</p>
 </div>
 </body>
 </html>
