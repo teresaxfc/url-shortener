@@ -7,6 +7,8 @@ const Logger = require('./lib/Logger');
 const UrlService = require('./lib/UrlService');
 const NotFoundError = require('./lib/NotFoundError');
 const passport = require('passport');
+const session = require('express-session');
+var cookieParser = require('cookie-parser');
 require('./passport')(passport);
 
 const logger = new Logger();
@@ -18,11 +20,13 @@ app.engine('html', ejs.renderFile);
 app.use('/static', express.static('../public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(session({ secret: 'shhsecret' }));
 app.use(passport.initialize());
-
+app.use(passport.session());
 
 app.get('/', (request, response) => {
-  response.render('index.html');
+  response.render('index.html', {user: request.user});
 });
 
 app.post('/api/shorten', (request, response) => {

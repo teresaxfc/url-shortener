@@ -1,54 +1,58 @@
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-            crossorigin="anonymous"></script>
-    <script src="/static/js/shorten.js"></script>
-    <script src="/static/js/copyUrl.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-    <link href="/static/css/index.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+          integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+          crossorigin="anonymous"></script>
+  <script src="/static/js/shorten.js"></script>
+  <script src="/static/js/copyUrl.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+  <link href="/static/css/index.css" rel="stylesheet">
 
-    <title>ShortEn|Url Shortener</title>
+  <title>ShortEn|Url Shortener</title>
 </head>
 <body>
 <div class="container-fluid">
-    <div class="header">
-        <a href="/"><h2 class="shorten-logo">ShortEn</h2></a>
-        <div class="button-wrap">
-            <a href="/auth/facebook" class="btn btn-primary" id="facebook"><span class="fa fa-facebook"></span> Facebook</a>
-        </div>
+  <div class="header">
+    <a href="/"><h2 class="shorten-logo">ShortEn</h2></a>
+    <div class="button-wrap">
+      <% if ( user ) { %>
+      <p><%= user.name.givenName %></p>
+      <% } else { %>
+      <a href="/auth/facebook" class="btn btn-primary" id="facebook"><span class="fa fa-facebook"></span> Facebook</a>
+      <% } %>
     </div>
+  </div>
 </div>
 
 <div id="container" class="background">
-    <div class="container">
-        <div class="jumbotron">
-            <h1 class="title text-center">Shorten Your Link with ShortEn</h1>
+  <div class="container">
+    <div class="jumbotron">
+      <h1 class="title text-center">Shorten Your Link with ShortEn</h1>
 
-            <form class="form-inline text-center">
-                <div class="form-group">
-                    <label for="url-field" class="sr-only">Url</label>
-                    <div class="col-lg-10">
-                        <input type="text" class="form-control" id="url-field"
-                               placeholder="Paste a link to shorten it">
-                        <div class="copied-url"></div>
-                    </div>
-                </div>
-                <button type="button" class="btn btn-primary" id="shorten-button">SHORTEN</button>
-                <button type="button" class="btn btn-success" id="copy-button">COPY</button>
-            </form>
+      <form class="form-inline text-center">
+        <div class="form-group">
+          <label for="url-field" class="sr-only">Url</label>
+          <div class="col-lg-10">
+            <input type="text" class="form-control" id="url-field"
+                   placeholder="Paste a link to shorten it">
+            <div class="copied-url"></div>
+          </div>
         </div>
+        <button type="button" class="btn btn-primary" id="shorten-button">SHORTEN</button>
+        <button type="button" class="btn btn-success" id="copy-button">COPY</button>
+      </form>
     </div>
+  </div>
 </div>
 
 <div class="footer">
-    <p>Copyright © 2017 Teresa. All rights reserved.</p>
+  <p>Copyright © 2017 Teresa. All rights reserved.</p>
 </div>
 </body>
 </html>

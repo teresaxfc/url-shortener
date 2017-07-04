@@ -11,9 +11,9 @@ module.exports = function (passport) {
   });
 
   passport.deserializeUser(function (id, done) {
-    userService.findById(id, function (err, user) {
-      done(err, user);
-    });
+    userService.findById(id)
+      .then(user => done(null, user))
+      .catch(error => done(error))
   });
 
   passport.use(new FacebookStrategy({
@@ -22,9 +22,9 @@ module.exports = function (passport) {
       callbackURL: configAuth.facebookAuth.callbackURL,
       profileFields: ['id', 'email', 'first_name', 'last_name']
     },
-    function(token, refreshToken, profile, done) {
-      process.nextTick(function() {
-        userService.getOrCreateByUserId( profile )
+    function (token, refreshToken, profile, done) {
+      process.nextTick(function () {
+        userService.getOrCreateByUserId(profile)
           .then(user => done(null, user))
           .catch(error => done(error))
       });

@@ -11,7 +11,7 @@ class UserRepository {
 
   findById(userId) {
     return this.getCollection()
-      .then(collection => collection.findOne({userId}))
+      .then(collection => collection.findOne({id:userId}))
   }
 
   save(user) {
