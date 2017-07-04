@@ -6,6 +6,8 @@ const base58 = require('./base58.js');
 const Logger = require('./lib/Logger');
 const UrlService = require('./lib/UrlService');
 const NotFoundError = require('./lib/NotFoundError');
+const passport = require('passport');
+require('./passport')(passport);
 
 const logger = new Logger();
 const urlService = new UrlService();
@@ -16,6 +18,8 @@ app.engine('html', ejs.renderFile);
 app.use('/static', express.static('../public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(passport.initialize());
+
 
 app.get('/', (request, response) => {
   response.render('index.html');
@@ -53,7 +57,16 @@ app.get('/:shortenedUrl', (request, response) => {
     });
 });
 
-app.listen(8080);
+app.get('/auth/facebook', passport.authenticate('facebook', {
+  scope: 'email'
+}));
+
+app.get('/auth/facebook/callback', passport.authenticate('facebook', {
+  successRedirect: '/',
+  failureRedirect: '/'
+}));
+
+app.listen(3000);
 
 module.exports = app;
 

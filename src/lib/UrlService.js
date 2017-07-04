@@ -1,5 +1,6 @@
 const UrlRepository = require('./UrlRepository');
 const CounterRepository = require('./CounterRepository');
+const UserRepository = require('./UserRepository');
 const Bluebird = require('bluebird');
 const NotFoundError = require('./NotFoundError');
 const Logger = require('./Logger');
@@ -9,6 +10,7 @@ class UrlService {
     this.logger = new Logger();
     this.urlRepository = new UrlRepository();
     this.counterRepository = new CounterRepository();
+    this.userRepository = new UserRepository();
   }
 
   getOrCreateByOriginalUrl(originalUrl) {

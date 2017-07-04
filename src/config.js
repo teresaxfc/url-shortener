@@ -3,7 +3,7 @@ const config = {
     host: 'localhost',
     name: 'url_shortener',
   },
-  webhost: 'http://localhost:8080/',
+  webhost: 'http://localhost:3000/',
 };
 
 module.exports = config;
