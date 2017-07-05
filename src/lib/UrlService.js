@@ -13,14 +13,14 @@ class UrlService {
     this.userRepository = new UserRepository();
   }
 
-  getOrCreateByOriginalUrl(originalUrl) {
+  getOrCreateByOriginalUrl(originalUrl, userId) {
     return this.urlRepository.findOne({ originalUrl })
-      .then(url => url || this.createNewUrl(originalUrl));
+      .then(url => url || this.createNewUrl(originalUrl, userId));
   }
 
-  createNewUrl(originalUrl) {
+  createNewUrl(originalUrl, userId) {
     return this.counterRepository.nextId()
-      .then(id => this.urlRepository.save({ _id: id, originalUrl, created_at: new Date() }));
+      .then(id => this.urlRepository.save({ _id: id, originalUrl, userId:userId, created_at: new Date() }));
   }
 
   findById(id) {

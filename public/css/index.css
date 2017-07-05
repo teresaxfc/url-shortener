@@ -95,6 +95,14 @@ button#shorten-button, #copy-button {
     font-size: 1.2em;
 }
 
-#user-name:hover {
+#user-name:hover #user-name:active{
     color: black;
+}
+
+#user-name:active{
+    color: black;
+}
+
+table.usage-history {
+    font-size: 1em;
 }
