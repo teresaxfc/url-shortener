@@ -9,6 +9,7 @@ const NotFoundError = require('./lib/NotFoundError');
 const passport = require('passport');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+const _ = require('lodash');
 require('./passport')(passport);
 
 const logger = new Logger();
@@ -45,13 +46,14 @@ app.get('/', (request, response) => {
 
 app.post('/api/shorten', (request, response) => {
   const originalUrl = request.body.originalUrl;
+  const userId = _.get(request,'user.id', null);
 
   if (!originalUrl) {
     response.status(400).send();
     return;
   }
 
-  urlService.getOrCreateByOriginalUrl(originalUrl)
+  urlService.getOrCreateByOriginalUrl(originalUrl, userId)
     .then(url => base58.encodeToBase58(url._id))
     .then(base58Id => response.send({
       shortenedUrl: config.webhost + base58Id,
