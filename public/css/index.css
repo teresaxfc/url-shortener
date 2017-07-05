@@ -90,3 +90,16 @@ button#shorten-button, #copy-button {
     padding: 1em 1.5em;
 }
 
+#user-name {
+    color: #097BC2;
+    font-size: 1.5em;
+}
+
+#user-name:hover {
+    color: black;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+

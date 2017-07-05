@@ -23,11 +23,9 @@
     <div class="button-wrap">
       <% if ( user ) { %>
       <div class="dropdown">
-        <p id="dLabel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <%= user.name.givenName %>
-          <span class="caret"></span>
-        </p>
-        <ul class="dropdown-menu" aria-labelledby="dLabel">
+        <p id="user-name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <%= user.name.givenName %><span class="caret"></span></p>
+        <ul class="dropdown-menu" aria-labelledby="user-name">
           <li>Log Out1</li>
           <li>Log Out2</li>
           <li>Log Out3</li>
