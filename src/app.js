@@ -8,7 +8,7 @@ const UrlService = require('./lib/UrlService');
 const NotFoundError = require('./lib/NotFoundError');
 const passport = require('passport');
 const session = require('express-session');
-var cookieParser = require('cookie-parser');
+const cookieParser = require('cookie-parser');
 require('./passport')(passport);
 
 const logger = new Logger();
@@ -24,6 +24,20 @@ app.use(cookieParser());
 app.use(session({ secret: 'shhsecret' }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.get('/logout', function(req, res){
+  req.logout();
+  res.redirect('/');
+});
+
+app.get('/auth/facebook', passport.authenticate('facebook', {
+  scope: 'email'
+}));
+
+app.get('/auth/facebook/callback', passport.authenticate('facebook', {
+  successRedirect: '/',
+  failureRedirect: '/'
+}));
 
 app.get('/', (request, response) => {
   response.render('index.html', {user: request.user});
@@ -61,16 +75,6 @@ app.get('/:shortenedUrl', (request, response) => {
     });
 });
 
-app.get('/auth/facebook', passport.authenticate('facebook', {
-  scope: 'email'
-}));
-
-app.get('/auth/facebook/callback', passport.authenticate('facebook', {
-  successRedirect: '/',
-  failureRedirect: '/'
-}));
-
 app.listen(3000);
 
 module.exports = app;
-

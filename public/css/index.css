@@ -92,14 +92,9 @@ button#shorten-button, #copy-button {
 
 #user-name {
     color: #097BC2;
-    font-size: 1.5em;
+    font-size: 1.2em;
 }
 
 #user-name:hover {
     color: black;
 }
-
-.dropdown:hover .dropdown-menu {
-    display: block;
-}
-
