@@ -22,7 +22,17 @@
     <a href="/"><h2 class="shorten-logo">ShortEn</h2></a>
     <div class="button-wrap">
       <% if ( user ) { %>
-      <p><%= user.name.givenName %></p>
+      <div class="dropdown">
+        <p id="dLabel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <%= user.name.givenName %>
+          <span class="caret"></span>
+        </p>
+        <ul class="dropdown-menu" aria-labelledby="dLabel">
+          <li>Log Out1</li>
+          <li>Log Out2</li>
+          <li>Log Out3</li>
+        </ul>
+      </div>
       <% } else { %>
       <a href="/auth/facebook" class="btn btn-primary" id="facebook"><span class="fa fa-facebook"></span> Facebook</a>
       <% } %>
