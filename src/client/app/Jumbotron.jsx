@@ -7,10 +7,12 @@ export default class Jumbotron extends React.Component {
     super(props);
     this.state = {
       inputValue: '',
+      copiedUrl: '',
     };
 
     this.updateInputValue = this.updateInputValue.bind(this);
     this.getShortenedUrl = this.getShortenedUrl.bind(this);
+    this.copyUrl = this.copyUrl.bind(this);
   }
 
   updateInputValue(event) {
@@ -22,7 +24,7 @@ export default class Jumbotron extends React.Component {
       axios.post('/api/shorten', {originalUrl: this.state.inputValue})
         .then(response => {
           const shortenedUrl = `${response.data.shortenedUrl}`;
-          this.setState({inputValue: shortenedUrl});
+          this.setState({inputValue: shortenedUrl, copiedUrl: ''});
         })
         .catch(function (error) {
           this.setState({inputValue: error});
@@ -30,7 +32,21 @@ export default class Jumbotron extends React.Component {
     }
   }
 
+  copyUrl() {
+    if (this.state.inputValue !== '') {
+      this.textInput.select();
+      document.execCommand('copy');
+      this.setState({copiedUrl: this.state.inputValue});
+
+      setTimeout(function () {
+        this.setState({copiedUrl:''});
+      }.bind(this),1000)
+    }
+  }
+
   render() {
+    let copiedUrl = this.state.copiedUrl;
+
     return (
       <div className="jumbotron">
         <h1 className="title text-center">Shorten Your Link with ShortEn</h1>
@@ -38,13 +54,15 @@ export default class Jumbotron extends React.Component {
           <div id="url-shorten-form">
             <input type="text" className="form-control" id="url-field"
                    placeholder="Paste a link to shorten it" onChange={this.updateInputValue}
-                   value={this.state.inputValue}/>
+                   value={this.state.inputValue} ref={(input) => {
+              this.textInput = input;
+            }}/>
             <button type="button" className="btn btn-primary" id="shorten-button" onClick={this.getShortenedUrl}>SHORTEN
             </button>
-            <button type="button" className="btn btn-success" id="copy-button">COPY</button>
+            <button type="button" className="btn btn-success" id="copy-button" onClick={this.copyUrl}>COPY</button>
           </div>
+          <div className="copied-url">{copiedUrl}</div>
         </form>
-        <div className="copied-url"></div>
       </div>
     );
   }
