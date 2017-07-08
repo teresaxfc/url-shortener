@@ -1,0 +1,66 @@
+div.header
+  background-color: #F5F4F4
+  height: 6em
+
+header h2
+  margin: 0 0 1.5em 0
+  height: 2.5em
+  line-height: 1.5em
+  padding: 0.4em 0 0 1em
+
+h2.shorten-logo
+  margin: 0.4em 0 0 6.3em
+  font-size: 3em
+  float: left
+
+div.button-wrap
+  display: block
+  float: right
+  margin-right: 18.7em
+  margin-top: 1.5em
+
+div
+  &.jumbotron
+    margin-top: 2.8em
+  &.form-group
+    position: relative
+  &.copied-url
+    position: absolute
+    top: 0.6em
+    left: 2em
+
+h1.title
+  margin-top: 0.3em
+
+input
+  &#url-field
+    width: 35em
+    height: 2.5em
+    padding-right: 50px
+    font-size: 1.2em
+
+#url-shorten-form
+  margin: 3em 0 0 1.2em
+  height: 3em
+  display: -webkit-flex
+  display: flex
+
+#url-shorten-form input:nth-of-type(1)
+  flex-grow: 1
+#url-shorten-form button:nth-of-type(1)
+  flex-grow: 0
+  width: 7em
+  margin: 0 0.5em
+#url-shorten-form button:nth-of-type(2)
+  flex-grow: 0
+  width: 7em
+
+#user-name
+  color: #097BC2
+  font-size: 1.2em
+  &:hover #user-name:active, &:active
+    color: black
+
+table.usage-history
+  margin-top: 3em
+  font-size: 1em
