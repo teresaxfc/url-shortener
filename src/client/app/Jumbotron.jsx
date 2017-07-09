@@ -24,6 +24,13 @@ export default class Jumbotron extends React.Component {
       axios.post('/api/shorten', {originalUrl: this.state.inputValue})
         .then(response => {
           const shortenedUrl = `${response.data.shortenedUrl}`;
+          const createdTime = `${response.data.created_at}`;
+
+          this.props.onShortedUrlCreated({
+            originalUrl: this.state.inputValue,
+            shortenedUrl: shortenedUrl,
+            createdTime: createdTime
+          });
           this.setState({inputValue: shortenedUrl, copiedUrl: ''});
         })
         .catch(function (error) {
@@ -39,8 +46,8 @@ export default class Jumbotron extends React.Component {
       this.setState({copiedUrl: this.state.inputValue});
 
       setTimeout(function () {
-        this.setState({copiedUrl:''});
-      }.bind(this),1000)
+        this.setState({copiedUrl: ''});
+      }.bind(this), 1000)
     }
   }
 
