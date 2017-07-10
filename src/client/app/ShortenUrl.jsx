@@ -31,7 +31,7 @@ export default class ShortenUrl extends React.Component {
             createdTime: createdTime
           };
 
-          document.cookie = "newCreatedUrl=" + createdShortenedUrl + ";";
+          document.cookie = "newCreatedUrl=" + JSON.stringify(createdShortenedUrl) + ";";
           this.props.onShortedUrlCreated(createdShortenedUrl);
           this.setState({inputValue: shortenedUrl, copiedUrl: ''});
         })
