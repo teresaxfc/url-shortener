@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import './index.sass';
 
-export default class Jumbotron extends React.Component {
+export default class ShortenUrl extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -25,12 +25,14 @@ export default class Jumbotron extends React.Component {
         .then(response => {
           const shortenedUrl = `${response.data.shortenedUrl}`;
           const createdTime = `${response.data.created_at}`;
-
-          this.props.onShortedUrlCreated({
+          const createdShortenedUrl = {
             originalUrl: this.state.inputValue,
             shortenedUrl: shortenedUrl,
             createdTime: createdTime
-          });
+          };
+
+          document.cookie = "newCreatedUrl=" + createdShortenedUrl + ";";
+          this.props.onShortedUrlCreated(createdShortenedUrl);
           this.setState({inputValue: shortenedUrl, copiedUrl: ''});
         })
         .catch(function (error) {
