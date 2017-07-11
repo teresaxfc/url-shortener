@@ -54,10 +54,15 @@ app.post('/api/shorten', (request, response) => {
   }
 
   urlService.getOrCreateByOriginalUrl(originalUrl, userId)
-    .then(url => base58.encodeToBase58(url._id))
-    .then(base58Id => response.send({
-      shortenedUrl: config.webhost + base58Id,
-      id: base58Id }))
+    .then(url => {
+      const base58Id=base58.encodeToBase58(url._id);
+      response.send({
+        shortenedUrl: config.webhost + base58Id,
+        id: base58Id,
+        created:url.created_at,
+        user:userId,
+      })
+    })
     .catch((err) => {
       logger.fatal('failed to save url', { err });
       response.status(500).send();
