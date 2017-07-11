@@ -8,8 +8,8 @@ class App extends React.Component {
   render() {
     return (
       <div className="react-app">
-        <Header />
-        <Content />
+        <Header user={user}/>
+        <Content user={user}/>
       </div>
     );
   }
