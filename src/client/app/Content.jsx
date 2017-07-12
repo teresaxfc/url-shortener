@@ -25,8 +25,8 @@ export default class Content extends React.Component {
   }
 
   loadShortenedUrls() {
-    const shortenedUrls = this.shortedUrlService.getSavedUrls();
-    this.setState({shortedUrls: shortenedUrls});
+    this.shortedUrlService.getUrlHistory()
+      .then(urls => this.setState({shortedUrls: urls}));
   }
 
   render() {

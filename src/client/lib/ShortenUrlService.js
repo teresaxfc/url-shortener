@@ -27,7 +27,7 @@ export default class ShortenUrlService {
   };
 
   saveToLocalStorage(createdShortenedUrl) {
-    const savedUrls = this.getSavedUrls();
+    const savedUrls = this.getUrlsFromLocal();
     const isSaved = savedUrls.some(function isSaved(element) {
       return element.shortenedUrl === createdShortenedUrl.shortenedUrl;
     });
@@ -36,9 +36,24 @@ export default class ShortenUrlService {
     }
   };
 
-  getSavedUrls() {
-    return Object.keys(localStorage)
-      .filter(key => key.startsWith('anonymous-url'))
-      .map(key => JSON.parse(localStorage.getItem(key)));
+  getUrlHistory() {
+    if(this.user === null) {
+      return this.getUrlsFromLocal();
+    } else {
+      return this.getUrlsFromService();
+    }
+  }
+
+  getUrlsFromLocal() {
+    return new Promise(function (resolve, reject){
+      resolve(Object.keys(localStorage)
+        .filter(key => key.startsWith('anonymous-url'))
+        .map(key => JSON.parse(localStorage.getItem(key))));
+    });
   };
+
+  getUrlsFromService() {
+    return axios.get('/urls', {user: this.user})
+      .then(serviceSavedUrls => serviceSavedUrls.data);
+  }
 }

@@ -1,7 +1,7 @@
 const UserRepository = require('./UserRepository');
 const Logger = require('./Logger');
 
-class UrlService {
+class UserService {
   constructor() {
     this.logger = new Logger();
     this.userRepository = new UserRepository();
@@ -22,4 +22,4 @@ class UrlService {
   }
 }
 
-module.exports = UrlService;
+module.exports = UserService;

@@ -14,6 +14,11 @@ class UrlRepository {
       .then(collection => collection.findOne(url));
   }
 
+  findUrlsByUserId(userId) {
+    return this.getCollection()
+      .then(collection => collection.find(userId).toArray());
+  }
+
   save(url) {
     return this.getCollection()
       .then(collection => collection.insertOne(url))
@@ -25,7 +30,7 @@ class UrlRepository {
       return Bluebird.resolve(this.collection);
     }
 
-    return mongo.connect(hostUrl, { promiseLibrary: Bluebird })
+    return mongo.connect(hostUrl, {promiseLibrary: Bluebird})
       .then(db => db.collection('urls'))
       .tap(collection => this.collection = collection);
   }

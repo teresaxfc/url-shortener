@@ -10,7 +10,6 @@ class UrlService {
     this.logger = new Logger();
     this.urlRepository = new UrlRepository();
     this.counterRepository = new CounterRepository();
-    this.userRepository = new UserRepository();
   }
 
   getOrCreateByOriginalUrl(originalUrl, userId) {
@@ -20,12 +19,17 @@ class UrlService {
 
   createNewUrl(originalUrl, userId) {
     return this.counterRepository.nextId()
-      .then(id => this.urlRepository.save({ _id: id, originalUrl, userId:userId, created_at: new Date() }));
+      .then(id => this.urlRepository.save({ _id: id, originalUrl, userId:userId, createdTime: new Date() }));
   }
 
   findById(id) {
     return this.urlRepository.findOne({ _id: id })
       .then(url => url || Bluebird.reject(new NotFoundError(`Could not find url by id: ${id}`)));
+  }
+
+  findByUserId(userId) {
+    return this.urlRepository.findUrlsByUserId({ userId: userId })
+      .then(urls => urls || Bluebird.reject(new NotFoundError(`Could not find url by user id: ${userId}`)));
   }
 }
 

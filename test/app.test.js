@@ -11,7 +11,7 @@ describe('url shortener service test', () => {
     return result
       .expect(200)
       .then((response) => {
-        expect(response.text).contains('Shorten Your Link with ShortEn');
+        expect(response.text).contains('<html lang="en">\n<head>\n');
       });
   });
 
@@ -52,3 +52,4 @@ describe('url shortener service test', () => {
       });
   });
 });
+

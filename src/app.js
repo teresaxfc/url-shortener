@@ -20,13 +20,13 @@ app.set('views', `${__dirname}/../views`);
 app.engine('html', ejs.renderFile);
 app.use('/static', express.static('../public'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
-app.use(session({ secret: 'shhsecret' }));
+app.use(session({secret: 'shhsecret'}));
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('/logout', function(req, res){
+app.get('/logout', function (req, res) {
   req.logout();
   res.redirect('/');
 });
@@ -40,13 +40,30 @@ app.get('/auth/facebook/callback', passport.authenticate('facebook', {
   failureRedirect: '/'
 }));
 
+app.get('/urls', (request, response) => {
+  const userId = _.get(request, 'user.id', null);
+  if (userId === null) {
+    return response.status(401).send();
+  }
+
+  urlService.findByUserId(userId)
+    .map(url => Object.assign({}, url, {
+      shortenedUrl: config.webhost + base58.encodeToBase58(url._id)
+    }))
+    .then(urls => response.send(urls))
+    .catch((error) => {
+      logger.error('failed to find shortened urls by user', {error});
+      response.status(500).send();
+    });
+});
+
 app.get('/', (request, response) => {
   response.render('index.html', {user: request.user});
 });
 
 app.post('/api/shorten', (request, response) => {
   const originalUrl = request.body.originalUrl;
-  const userId = _.get(request,'user.id', null);
+  const userId = _.get(request, 'user.id', null);
 
   if (!originalUrl) {
     response.status(400).send();
@@ -55,16 +72,17 @@ app.post('/api/shorten', (request, response) => {
 
   urlService.getOrCreateByOriginalUrl(originalUrl, userId)
     .then(url => {
-      const base58Id=base58.encodeToBase58(url._id);
+      const base58Id = base58.encodeToBase58(url._id);
       response.send({
+        originalUrl:url.originalUrl,
         shortenedUrl: config.webhost + base58Id,
         id: base58Id,
-        created:url.created_at,
-        user:userId,
+        createdTime: url.createdTime,
+        user: url.userId,
       })
     })
-    .catch((err) => {
-      logger.fatal('failed to save url', { err });
+    .catch((error) => {
+      logger.error('failed to save url', {error});
       response.status(500).send();
     });
 });
@@ -76,8 +94,8 @@ app.get('/:shortenedUrl', (request, response) => {
   urlService.findById(decimalId)
     .then(url => response.redirect(url.originalUrl))
     .catch(NotFoundError, () => response.redirect(config.webhost))
-    .catch((err) => {
-      logger.fatal('failed to find url', { err });
+    .catch((error) => {
+      logger.error('failed to find url', {error});
       response.status(500).send();
     });
 });
