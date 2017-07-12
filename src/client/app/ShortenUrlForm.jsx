@@ -1,44 +1,33 @@
 import React, {Component} from 'react';
-import axios from 'axios';
+import ShortenUrlService from '../lib/ShortenUrlService';
 import './index.sass';
 
-export default class ShortenUrl extends React.Component {
+export default class ShortenUrlForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       inputValue: '',
       copiedUrl: '',
+      error: ''
     };
 
     this.updateInputValue = this.updateInputValue.bind(this);
-    this.getShortenedUrl = this.getShortenedUrl.bind(this);
+    this.createShortenedUrl = this.createShortenedUrl.bind(this);
     this.copyUrl = this.copyUrl.bind(this);
+
+    this.shortedUrlService = new ShortenUrlService(props.user);
   }
 
   updateInputValue(event) {
     this.setState({inputValue: event.target.value});
   }
 
-  getShortenedUrl() {
-    if (this.state.inputValue.indexOf('localhost') < 0) {
-      axios.post('/api/shorten', {originalUrl: this.state.inputValue})
-        .then(response => {
-          const shortenedUrl = `${response.data.shortenedUrl}`;
-          const createdTime = `${response.data.created_at}`;
-          const createdShortenedUrl = {
-            originalUrl: this.state.inputValue,
-            shortenedUrl: shortenedUrl,
-            createdTime: createdTime
-          };
-
-          document.cookie = "newCreatedUrl=" + JSON.stringify(createdShortenedUrl) + ";";
-          this.props.onShortedUrlCreated(createdShortenedUrl);
-          this.setState({inputValue: shortenedUrl, copiedUrl: ''});
-        })
-        .catch(function (error) {
-          this.setState({inputValue: error});
-        });
-    }
+  createShortenedUrl() {
+    const inputUrl = this.state.inputValue;
+    this.shortedUrlService.createShortenUrl(inputUrl)
+      .then(url => this.setState({inputValue: url.shortenedUrl}))
+      .then(() => this.props.onShortedUrlCreated())
+      .catch((error) => this.setState({error: error}));
   }
 
   copyUrl() {
@@ -66,12 +55,14 @@ export default class ShortenUrl extends React.Component {
                    value={this.state.inputValue} ref={(input) => {
               this.textInput = input;
             }}/>
-            <button type="button" className="btn btn-primary" id="shorten-button" onClick={this.getShortenedUrl}>SHORTEN
+            <button type="button" className="btn btn-primary" id="shorten-button" onClick={this.createShortenedUrl}>
+              SHORTEN
             </button>
             <button type="button" className="btn btn-success" id="copy-button" onClick={this.copyUrl}>COPY</button>
           </div>
           <div className="copied-url">{copiedUrl}</div>
         </form>
+        <div className="error-message">{this.state.error}</div>
       </div>
     );
   }

@@ -1,23 +1,31 @@
 import React, {Component} from 'react';
+import moment from 'moment';
 import './index.sass';
 
-export default class DataAnalyse extends React.Component {
+export default class ShortenedUrlHistory extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       clickCount: 1,
     };
+
+    this.getShortenedUrlHistory = this.getShortenedUrlHistory.bind(this);
   }
 
-  render() {
-    const shortenedUrls = this.props.shortedUrls.map((shortedUrl,index) =>
+  getShortenedUrlHistory() {
+    const shortedUrls = this.props.shortedUrls;
+
+    return shortedUrls.map((shortedUrl, index) =>
       <tr key={index}>
         <td><a href={shortedUrl.originalUrl}>{shortedUrl.originalUrl}</a></td>
         <td><a href={shortedUrl.originalUrl}>{shortedUrl.shortenedUrl}</a></td>
-        <td><a href={shortedUrl.originalUrl}>{shortedUrl.createdTime}</a></td>
+        <td>{moment(shortedUrl.createdTime).fromNow()}</td>
       </tr>
     );
+  }
 
+  render() {
+    let shortenedUrls = this.getShortenedUrlHistory();
     return (
       <table className="table table-hover usage-history">
         <thead>

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import ShortenUrl from './ShortenUrl.jsx';
-import DataAnalyse from './DataAnalyse.jsx';
+import ShortenUrlForm from './ShortenUrlForm.jsx';
+import ShortenedUrlHistory from './ShortenedUrlHistory.jsx';
+import ShortenUrlService from '../lib/ShortenUrlService';
 import './index.sass';
 
 export default class Content extends React.Component {
@@ -11,28 +12,28 @@ export default class Content extends React.Component {
     };
 
     this.onShortedUrlCreated = this.onShortedUrlCreated.bind(this);
+    this.loadShortenedUrls = this.loadShortenedUrls.bind(this);
+    this.shortedUrlService = new ShortenUrlService(props.user);
   }
 
-  onShortedUrlCreated(shortedUrl) {
-    const shortedUrls = this.state.shortedUrls;
-    if(shortedUrls.length === 0) {
-      const updatedHistory = shortedUrls.concat([shortedUrl]);
-      this.setState({shortedUrls: updatedHistory});
-    } else {
-      for (let i = 0; i < shortedUrls.length; i += 1) {
-        if (shortedUrls[i].originalUrl !== shortedUrl.originalUrl) {
-          const updatedHistory = shortedUrls.concat([shortedUrl]);
-          this.setState({shortedUrls: updatedHistory});
-        }
-      }
-    }
+  componentDidMount() {
+    this.loadShortenedUrls();
+  }
+
+  onShortedUrlCreated() {
+    this.loadShortenedUrls();
+  }
+
+  loadShortenedUrls() {
+    const shortenedUrls = this.shortedUrlService.getSavedUrls();
+    this.setState({shortedUrls: shortenedUrls});
   }
 
   render() {
     return (
       <div className="container content">
-        <ShortenUrl onShortedUrlCreated={this.onShortedUrlCreated}/>
-        <DataAnalyse shortedUrls={this.state.shortedUrls}/>
+        <ShortenUrlForm onShortedUrlCreated={this.onShortedUrlCreated} user={user}/>
+        <ShortenedUrlHistory shortedUrls={this.state.shortedUrls}/>
       </div>
     )
   }
