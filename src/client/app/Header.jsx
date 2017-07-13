@@ -7,7 +7,7 @@ export default class Header extends React.Component {
         <div className="dropdown">
           <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                   aria-expanded="false" id="drop-down-menu">
-            {this.props.user.name.givenName} {this.props.user.name.familyName}
+            {this.props.user.firstName} {this.props.user.lastName}
             <span className="caret"></span>
           </button>
           <ul className="dropdown-menu">
