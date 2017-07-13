@@ -11,7 +11,12 @@ class UserRepository {
 
   findById(userId) {
     return this.getCollection()
-      .then(collection => collection.findOne({id:userId}))
+      .then(collection => collection.findOne({_id: userId}))
+  }
+
+  findByExternalId(oauthProvider, externalId) {
+    return this.getCollection()
+      .then(collection => collection.findOne({oauthProvider, externalId}))
   }
 
   save(user) {
@@ -25,7 +30,7 @@ class UserRepository {
       return Bluebird.resolve(this.collection);
     }
 
-    return mongo.connect(hostUrl, { promiseLibrary: Bluebird })
+    return mongo.connect(hostUrl, {promiseLibrary: Bluebird})
       .then(db => db.collection('users'))
       .tap(collection => this.collection = collection);
   }

@@ -18,7 +18,7 @@ export default class ShortenedUrlHistory extends React.Component {
     return shortedUrls.map((shortedUrl, index) =>
       <tr key={index}>
         <td className="original-url"><a href={shortedUrl.originalUrl}>{shortedUrl.originalUrl}</a></td>
-        <td className="shortened-url"><a href={shortedUrl.originalUrl}>{shortedUrl.shortenedUrl}</a></td>
+        <td className="shortened-url"><a href={shortedUrl.shortenedUrl}>{shortedUrl.shortenedUrl}</a></td>
         <td className="created-time">{moment(shortedUrl.createdTime).fromNow()}</td>
       </tr>
     );

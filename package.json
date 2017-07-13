@@ -27,7 +27,8 @@
     "passport-twitter": "^1.0.4",
     "react": "^15.6.1",
     "react-bootstrap": "^0.31.0",
-    "react-dom": "^15.6.1"
+    "react-dom": "^15.6.1",
+    "uuid-1345": "^0.99.6"
   },
   "devDependencies": {
     "chai": "^4.0.2",

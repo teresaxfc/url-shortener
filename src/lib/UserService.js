@@ -8,8 +8,7 @@ class UserService {
   }
 
   getOrCreateByUserId(user) {
-    const userId = user.id;
-    return this.userRepository.findById( userId )
+    return this.userRepository.findByExternalId( user.oauthProvider, user.externalId )
       .then(existingUser => existingUser || this.createNewUser(user));
   }
 
