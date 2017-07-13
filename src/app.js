@@ -41,7 +41,7 @@ app.get('/auth/facebook/callback', passport.authenticate('facebook', {
 }));
 
 app.get('/urls', (request, response) => {
-  const userId = _.get(request, 'user.id', null);
+  const userId = _.get(request, 'user._id.id', null);
   if (userId === null) {
     return response.status(401).send();
   }
@@ -63,7 +63,7 @@ app.get('/', (request, response) => {
 
 app.post('/api/shorten', (request, response) => {
   const originalUrl = request.body.originalUrl;
-  const userId = _.get(request, 'user.id', null);
+  const userId = _.get(request, 'user._id.id', null);
 
   if (!originalUrl) {
     response.status(400).send();

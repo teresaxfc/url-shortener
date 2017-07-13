@@ -10,7 +10,7 @@ export default class ShortenUrlService {
       return axios.post('/api/shorten', {originalUrl: originalUrl})
         .then(response => {
           const shortenedUrl = `${response.data.shortenedUrl}`;
-          const createdTime = `${response.data.created}`;
+          const createdTime = `${response.data.createdTime}`;
           const createdShortenedUrl = {
             originalUrl: response.data.originalUrl,
             shortenedUrl: shortenedUrl,
@@ -27,17 +27,19 @@ export default class ShortenUrlService {
   };
 
   saveToLocalStorage(createdShortenedUrl) {
-    const savedUrls = this.getUrlsFromLocal();
-    const isSaved = savedUrls.some(function isSaved(element) {
-      return element.shortenedUrl === createdShortenedUrl.shortenedUrl;
-    });
-    if (!isSaved) {
-      localStorage.setItem(`anonymous-url-${new Date()}`, JSON.stringify(createdShortenedUrl));
-    }
+    this.getUrlsFromLocal()
+      .then(savedUrls => {
+        const isSaved = savedUrls.some(function isSaved(element) {
+          return element.shortenedUrl === createdShortenedUrl.shortenedUrl;
+        });
+        if (!isSaved) {
+          localStorage.setItem(`anonymous-url-${new Date()}`, JSON.stringify(createdShortenedUrl));
+        }
+      });
   };
 
   getUrlHistory() {
-    if(this.user === null) {
+    if (this.user === null) {
       return this.getUrlsFromLocal();
     } else {
       return this.getUrlsFromService();
@@ -45,7 +47,7 @@ export default class ShortenUrlService {
   }
 
   getUrlsFromLocal() {
-    return new Promise(function (resolve, reject){
+    return new Promise(function (resolve, reject) {
       resolve(Object.keys(localStorage)
         .filter(key => key.startsWith('anonymous-url'))
         .map(key => JSON.parse(localStorage.getItem(key))));
