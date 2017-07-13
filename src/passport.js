@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const UserService = require('./lib/UserService');
+const User = require('./lib/User');
 const configAuth = require('./auth');
 
 module.exports = function (passport) {
@@ -24,8 +25,15 @@ module.exports = function (passport) {
     },
     function (token, refreshToken, profile, done) {
       process.nextTick(function () {
-        userService.getOrCreateByUserId(profile)
-          .then(user => done(null, user))
+        const user = new User(
+          profile.id,
+          profile.name.givenName,
+          profile.name.familyName,
+          _.get(profile, 'emails[0].value', '').toLowerCase(),
+        );
+
+        userService.getOrCreateByUserId(user)
+          .then(savedUser => done(null, savedUser))
           .catch(error => done(error))
       });
     }));
