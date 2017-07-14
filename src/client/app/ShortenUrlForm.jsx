@@ -14,6 +14,7 @@ export default class ShortenUrlForm extends React.Component {
     this.updateInputValue = this.updateInputValue.bind(this);
     this.createShortenedUrl = this.createShortenedUrl.bind(this);
     this.copyUrl = this.copyUrl.bind(this);
+    this.PressEnterToCreateShortenUrl = this.PressEnterToCreateShortenUrl.bind(this);
 
     this.shortedUrlService = new ShortenUrlService(props.user);
   }
@@ -42,6 +43,12 @@ export default class ShortenUrlForm extends React.Component {
     }
   }
 
+  PressEnterToCreateShortenUrl(event) {
+    if(event.key == 'Enter'){
+      this.createShortenedUrl();
+    }
+  }
+
   render() {
     let copiedUrl = this.state.copiedUrl;
 
@@ -50,7 +57,7 @@ export default class ShortenUrlForm extends React.Component {
         <h1 className="title text-center">Shorten Your Link with ShortEn</h1>
         <form className="form-inline text-center">
           <div id="url-shorten-form">
-            <input type="text" className="form-control" id="url-field"
+            <input type="text" className="form-control" id="url-field"  tabIndex="0" onKeyDown={this.PressEnterToCreateShortenUrl}
                    placeholder="Paste a link to shorten it" onChange={this.updateInputValue}
                    value={this.state.inputValue} ref={(input) => {
               this.textInput = input;
