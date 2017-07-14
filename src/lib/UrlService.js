@@ -13,7 +13,7 @@ class UrlService {
   }
 
   getOrCreateByOriginalUrl(originalUrl, userId) {
-    return this.urlRepository.findOne({ originalUrl })
+    return this.urlRepository.findOne({ originalUrl, userId })
       .then(url => url || this.createNewUrl(originalUrl, userId));
   }
 
