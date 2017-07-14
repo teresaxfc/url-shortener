@@ -28,6 +28,7 @@
     "react": "^15.6.1",
     "react-bootstrap": "^0.31.0",
     "react-dom": "^15.6.1",
+    "serve-favicon": "^2.4.3",
     "uuid-1345": "^0.99.6"
   },
   "devDependencies": {

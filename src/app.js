@@ -9,6 +9,8 @@ const NotFoundError = require('./lib/NotFoundError');
 const passport = require('passport');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+const favicon = require('serve-favicon');
+const path = require('path');
 const _ = require('lodash');
 require('./passport')(passport);
 
@@ -19,6 +21,7 @@ const app = express();
 app.set('views', `${__dirname}/../views`);
 app.engine('html', ejs.renderFile);
 app.use('/static', express.static('../public'));
+app.use(favicon(path.join(__dirname, '../public', 'favicon.ico')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
