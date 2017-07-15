@@ -1,8 +1,5 @@
 const config = {
-  db: {
-    host: 'localhost',
-    name: 'url_shortener',
-  },
+  mongodbUri: process.env.MONGODB_URI || 'mongodb://localhost/url_shortener',
   webhost: 'http://localhost:3000/',
 };
 

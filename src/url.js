@@ -4,7 +4,7 @@ const Bluebird = require('bluebird');
 const config = require('./config');
 
 mongoose.Promise = global.Promise;
-const db = mongoose.createConnection(`mongodb://${config.db.host}/${config.db.name}`, { promiseLibrary: Bluebird });
+const db = mongoose.createConnection(config.mongodbUri, { promiseLibrary: Bluebird });
 
 const logger = new Logger();
 const Schema = mongoose.Schema;

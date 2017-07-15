@@ -2,7 +2,7 @@ const mongo = require('mongodb').MongoClient;
 const Bluebird = require('bluebird');
 const config = require('../config');
 
-const url = `mongodb://${config.db.host}/${config.db.name}`;
+const url = config.mongodbUri;
 
 class CounterRepository {
   constructor() {
