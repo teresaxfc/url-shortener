@@ -51,7 +51,7 @@
   "scripts": {
     "start": "node src/app",
     "check": "eslint .",
-    "test": "istanbul cover node_modules/.bin/_mocha --recursive test/* && istanbul check-coverage --statements 94",
+    "test": "istanbul cover node_modules/.bin/_mocha --recursive test/* && istanbul check-coverage --statements 60",
     "dev": "webpack -d --watch",
     "build": "webpack -p",
     "heroku-postbuild": "webpack -p"
