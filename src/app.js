@@ -20,7 +20,7 @@ const urlService = new UrlService();
 const app = express();
 app.set('views', `${__dirname}/../views`);
 app.engine('html', ejs.renderFile);
-app.use('/static', express.static('../public'));
+app.use('/static', express.static(path.join(__dirname,'../public')));
 app.use(favicon(path.join(__dirname, '../public', 'favicon.ico')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -103,6 +103,6 @@ app.get('/:shortenedUrl', (request, response) => {
     });
 });
 
-app.listen(3000);
+app.listen(process.env.PORT || 3000);
 
 module.exports = app;
