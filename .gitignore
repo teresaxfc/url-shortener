@@ -3,3 +3,4 @@ node_modules
 .iml
 coverage
 public/js/bundle.js
+package-lock.json
