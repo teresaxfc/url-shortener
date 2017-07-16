@@ -78,7 +78,7 @@ app.post('/api/shorten', (request, response) => {
       const base58Id = base58.encodeToBase58(url._id);
       response.send({
         originalUrl:url.originalUrl,
-        shortenedUrl: config.webhost + base58Id,
+        shortenedUrl: `${config.webhost}/${base58Id}`,
         id: base58Id,
         createdTime: url.createdTime,
         user: url.userId,
