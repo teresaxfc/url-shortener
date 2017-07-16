@@ -21,7 +21,7 @@ class CounterRepository {
 
   nextId() {
     return this.getCollection()
-      .then(collection => collection.findOneAndUpdate({ _id: 'url_count' }, { $inc: { seq: 1 } }, { returnNewDocument: true }))
+      .then(collection => collection.findOneAndUpdate({ _id: 'url_count' }, { $inc: { seq: 1 } }, { returnNewDocument: true, upsert: true }))
       .then(result => result.value.seq);
   }
 }
