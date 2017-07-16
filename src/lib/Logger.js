@@ -15,6 +15,10 @@ class Logger {
     this.logger.info(meta, message);
   }
 
+  error(message, meta = {}) {
+    this.logger.fatal(meta, message);
+  }
+
   fatal(message, meta = {}) {
     this.logger.fatal(meta, message);
   }
