@@ -6,24 +6,27 @@ export default class ShortenUrlService {
   }
 
   createShortenUrl(originalUrl) {
-    if (originalUrl.indexOf('localhost') < 0) {
-      return axios.post('/api/shorten', {originalUrl: originalUrl})
-        .then(response => {
-          const shortenedUrl = `${response.data.shortenedUrl}`;
-          const createdTime = `${response.data.createdTime}`;
-          const createdShortenedUrl = {
-            originalUrl: response.data.originalUrl,
-            shortenedUrl: shortenedUrl,
-            createdTime: createdTime,
-          };
-
-          if (this.user === null) {
-            this.saveToLocalStorage(createdShortenedUrl);
-          }
-
-          return createdShortenedUrl;
-        });
+    const hostName = window.location.hostname;
+    if (originalUrl.indexOf(hostName) >= 0) {
+      return Promise.reject('It is not a valid url.');
     }
+
+    return axios.post('/api/shorten', {originalUrl: originalUrl})
+      .then(response => {
+        const shortenedUrl = `${response.data.shortenedUrl}`;
+        const createdTime = `${response.data.createdTime}`;
+        const createdShortenedUrl = {
+          originalUrl: response.data.originalUrl,
+          shortenedUrl: shortenedUrl,
+          createdTime: createdTime,
+        };
+
+        if (this.user === null) {
+          this.saveToLocalStorage(createdShortenedUrl);
+        }
+
+        return createdShortenedUrl;
+      });
   };
 
   saveToLocalStorage(createdShortenedUrl) {

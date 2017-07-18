@@ -25,6 +25,7 @@ export default class ShortenUrlForm extends React.Component {
 
   createShortenedUrl() {
     const inputUrl = this.state.inputValue;
+    this.setState({error: ''});
     this.shortedUrlService.createShortenUrl(inputUrl)
       .then(url => this.setState({inputValue: url.shortenedUrl}))
       .then(() => this.props.onShortedUrlCreated())
@@ -67,7 +68,7 @@ export default class ShortenUrlForm extends React.Component {
                   this.textInput = input;
                 }}/>
                 <div className="copied-url">{copiedUrl}</div>
-                <div className="error-message">{this.state.error}</div>
+                <div className="error-message"><i>{this.state.error}</i></div>
               </div>
               <div className="buttons col-xs-12 col-sm-3">
                 <button type="button" className="btn btn-primary" id="shorten-button"
