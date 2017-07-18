@@ -39,12 +39,13 @@ export default class ShortenUrlForm extends React.Component {
 
       setTimeout(function () {
         this.setState({copiedUrl: ''});
-      }.bind(this), 1000)
+      }.bind(this), 800)
     }
   }
 
   PressEnterToCreateShortenUrl(event) {
-    if(event.key == 'Enter'){
+    if (event.key == 'Enter') {
+      event.preventDefault();
       this.createShortenedUrl();
     }
   }
@@ -54,22 +55,33 @@ export default class ShortenUrlForm extends React.Component {
 
     return (
       <div className="jumbotron">
-        <h1 className="title text-center">Shorten Your Link with ShortEn</h1>
+        <h1 className="title text-center">Shorten Your Link Here</h1>
         <form className="form-inline text-center">
           <div id="url-shorten-form">
-            <input type="text" className="form-control" id="url-field"  tabIndex="0" onKeyDown={this.PressEnterToCreateShortenUrl}
-                   placeholder="Paste a link to shorten it" onChange={this.updateInputValue}
-                   value={this.state.inputValue} ref={(input) => {
-              this.textInput = input;
-            }}/>
-            <button type="button" className="btn btn-primary" id="shorten-button" onClick={this.createShortenedUrl}>
-              SHORTEN
-            </button>
-            <button type="button" className="btn btn-success" id="copy-button" onClick={this.copyUrl}>COPY</button>
+            <div className="row">
+              <div className="input-field  col-xs-12 col-sm-8 col-sm-offset-1">
+                <input type="text" className="form-control" id="url-field" tabIndex="0"
+                       onKeyDown={this.PressEnterToCreateShortenUrl}
+                       placeholder="Paste a link to shorten it" onChange={this.updateInputValue}
+                       value={this.state.inputValue} ref={(input) => {
+                  this.textInput = input;
+                }}/>
+                <div className="copied-url">{copiedUrl}</div>
+                <div className="error-message">{this.state.error}</div>
+              </div>
+              <div className="buttons col-xs-12 col-sm-3">
+                <button type="button" className="btn btn-primary" id="shorten-button"
+                        onClick={this.createShortenedUrl}>
+                  SHORTEN
+                </button>
+                <button type="button" className="btn btn-success" id="copy-button"
+                        onClick={this.copyUrl}>
+                  COPY
+                </button>
+              </div>
+            </div>
           </div>
-          <div className="copied-url">{copiedUrl}</div>
         </form>
-        <div className="error-message">{this.state.error}</div>
       </div>
     );
   }
