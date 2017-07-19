@@ -60,7 +60,7 @@ export default class ShortenUrlForm extends React.Component {
         <form className="form-inline text-center">
           <div id="url-shorten-form">
             <div className="row">
-              <div className="input-field  col-xs-12 col-sm-8 col-sm-offset-1">
+              <div className="input-field  col-xs-12 col-sm-6 col-sm-offset-1 col-md-7">
                 <input type="text" className="form-control" id="url-field" tabIndex="0"
                        onKeyDown={this.PressEnterToCreateShortenUrl}
                        placeholder="Paste a link to shorten it" onChange={this.updateInputValue}
@@ -70,7 +70,7 @@ export default class ShortenUrlForm extends React.Component {
                 <div className="copied-url">{copiedUrl}</div>
                 <div className="error-message"><i>{this.state.error}</i></div>
               </div>
-              <div className="buttons col-xs-12 col-sm-3">
+              <div className="buttons col-xs-12 col-sm-5 col-md-4">
                 <button type="button" className="btn btn-primary" id="shorten-button"
                         onClick={this.createShortenedUrl}>
                   SHORTEN

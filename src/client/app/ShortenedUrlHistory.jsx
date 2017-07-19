@@ -16,29 +16,30 @@ export default class ShortenedUrlHistory extends React.Component {
     const shortedUrls = this.props.shortedUrls;
 
     return shortedUrls.map((shortedUrl, index) =>
-      <tr key={index}>
-        <td className="original-url"><a href={shortedUrl.originalUrl}>{shortedUrl.originalUrl}</a></td>
-        <td className="shortened-url"><a href={shortedUrl.shortenedUrl}>{shortedUrl.shortenedUrl}</a></td>
-        <td className="created-time">{moment(shortedUrl.createdTime).fromNow()}</td>
-      </tr>
+      <div key={index} className="table-row">
+        <div className="table-column table-content-cell original-url col-xs-12 col-md-7">
+          <a href={shortedUrl.originalUrl} className="url-link">{shortedUrl.originalUrl}</a></div>
+        <div className="table-column table-content-cell shortened-url col-xs-12 col-md-3">
+          <a href={shortedUrl.shortenedUrl} className="url-link">{shortedUrl.shortenedUrl}</a></div>
+        <div className="table-column table-content-cell created-time col-xs-12 col-md-2">
+          {moment(shortedUrl.createdTime).fromNow()}</div>
+      </div>
     );
   }
 
   render() {
     let shortenedUrls = this.getShortenedUrlHistory();
     return (
-      <table className="table table-hover usage-history">
-        <thead>
-        <tr>
-          <th>Original URL</th>
-          <th>Short URL</th>
-          <th>Created</th>
-        </tr>
-        </thead>
-        <tbody>
-        {shortenedUrls}
-        </tbody>
-      </table>
+      <div className="table usage-history-table">
+        <div className="table-head">
+          <div className="table-column table-head-cell col-md-7">Original Url</div>
+          <div className="table-column table-head-cell col-md-3">Short Url</div>
+          <div className="table-column table-head-cell col-md-2">Created</div>
+        </div>
+        <div className="table-content">
+          {shortenedUrls}
+        </div>
+      </div>
     );
   }
 }
