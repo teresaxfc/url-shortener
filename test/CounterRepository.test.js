@@ -6,12 +6,19 @@ const expect = chai.expect;
 describe('CounterRepository test', () => {
   const counterRepository = new CounterRepository();
 
-  it('Should increase Id each time call the nextId function', () => {
-    const generateFirstId = counterRepository.nextId();
+  it('Should return 1 when no existing counter', () => {
+    counterRepository.counterId = `url_counter_test_${new Date()}`;
 
-    return generateFirstId
+    return counterRepository.nextId()
+      .then(id => expect(id).equals(1));
+  });
+
+  it('Should increase counter by 1 when the counter exists', () => {
+    counterRepository.counterId = `url_counter_test_increase_${new Date()}`;
+
+    return counterRepository.nextId()
       .then(firstId => counterRepository.nextId()
-        .then(secondId => expect(secondId).equals(firstId + 1))
+        .then(secondId => expect(secondId).equals(2))
       );
   });
 });
