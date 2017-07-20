@@ -1,11 +1,8 @@
 const _ = require('lodash');
-const uuid = require('uuid-1345');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const UserService = require('./lib/UserService');
 const User = require('./lib/User');
 const configAuth = require('./auth');
-
-const facebookUUID = uuid.v5({namespace: uuid.namespace.oid, name: 'facebook'});
 
 module.exports = function (passport) {
   const userService = new UserService();
@@ -29,7 +26,6 @@ module.exports = function (passport) {
     function (token, refreshToken, profile, done) {
       process.nextTick(function () {
         const user = new User(
-          uuid.v5({namespace: facebookUUID, name: profile.id}),
           "facebook",
           profile.id,
           profile.name.givenName,
@@ -39,7 +35,7 @@ module.exports = function (passport) {
 
         userService.getOrCreateByUserId(user)
           .then(savedUser => done(null, savedUser))
-          .catch(error => done(error))
+          .catch(error => done(error));
       });
     }));
 };

@@ -1,5 +1,8 @@
 const UserRepository = require('./UserRepository');
+const uuid = require('uuid-1345');
 const Logger = require('./Logger');
+
+const facebookUUID = uuid.v5({namespace: uuid.namespace.oid, name: 'facebook'});
 
 class UserService {
   constructor() {
@@ -13,6 +16,7 @@ class UserService {
   }
 
   createNewUser(user) {
+    user._id = uuid.v5({namespace: facebookUUID, name: user.externalId});
     return this.userRepository.save(user)
   }
 

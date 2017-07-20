@@ -1,6 +1,5 @@
 class User {
-  constructor(id, oauthProvider, externalId, firstName, lastName, email ) {
-    this._id = id;
+  constructor(oauthProvider, externalId, firstName, lastName, email ) {
     this.oauthProvider = oauthProvider;
     this.externalId = externalId;
     this.firstName = firstName;

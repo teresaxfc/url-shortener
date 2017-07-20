@@ -1,30 +1,36 @@
 import React, {Component} from 'react';
+import {ButtonToolbar} from 'react-bootstrap';
+import {DropdownButton} from 'react-bootstrap';
+import {MenuItem} from 'react-bootstrap';
 import './index.sass';
 
 export default class Header extends React.Component {
   render() {
-      const userMenu = () =>
-        <div className="dropdown">
-          <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                  aria-expanded="false" id="drop-down-menu">
-            {this.props.user.firstName} {this.props.user.lastName}
-            <span className="caret"></span>
-          </button>
-          <ul className="dropdown-menu">
-            <li><a href="#">Settings</a></li>
-            <li><a href="/logout" className="log-out">Log Out</a></li>
-          </ul>
-        </div>;
+    const userMenu = () =>
+      <DropdownButton title={this.props.user.firstName + ' ' + this.props.user.lastName} id="user-menu"
+                      pullRight={true}>
+        <MenuItem href="#">Settings</MenuItem>
+        <MenuItem divider/>
+        <MenuItem href="/logout" className="log-out">Log Out</MenuItem>
+      </DropdownButton>;
 
-      const userLogin = () =>
-        <a href="/auth/facebook" className="btn btn-primary" id="facebook">
-          <span className="fa fa-facebook"></span> Facebook</a>;
+    const userLogin = () =>
+      <DropdownButton title="Log In" id="login-menu" pullRight={true}>
+        <MenuItem href="/auth/facebook" bsStyle='primary' id="facebook">
+          <span className="fa fa-facebook"></span> Facebook</MenuItem>
+        <MenuItem href="/auth/twitter" bsStyle='info' id="twitter">
+          <span className="fa fa-twitter"></span> Twitter</MenuItem>
+        <MenuItem href="/auth/google" bsStyle='danger' id="google">
+          <span className="fa fa-google-plus"></span> Google</MenuItem>
+      </DropdownButton>;
 
     return (
       <div className="container-fluid header">
-        <a href="/"><h2 className="shorten-logo">ShortEn</h2></a>
-        <div className="button-wrap">
-          {this.props.user === null ? userLogin() : userMenu()}
+        <div className="row">
+          <a href="/" className="logo col-xs-8 col-sm-9 col-sm-offset-1"><h2 className="shorten-logo">ShortEn</h2></a>
+          <ButtonToolbar className="menu col-xs-4 col-sm-1">
+            {this.props.user === null ? userLogin() : userMenu()}
+          </ButtonToolbar>
         </div>
       </div>
     );
