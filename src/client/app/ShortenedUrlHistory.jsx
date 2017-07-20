@@ -7,15 +7,38 @@ export default class ShortenedUrlHistory extends React.Component {
     super(props);
     this.state = {
       clickCount: 1,
+      sortBy: 'createdTime',
+      sortMethod: 'descend',
     };
 
     this.getShortenedUrlHistory = this.getShortenedUrlHistory.bind(this);
   }
 
-  getShortenedUrlHistory() {
-    const shortedUrls = this.props.shortedUrls;
+  sortUrls(urls, sortBy, sortMethod) {
+    const ascendSortedUrls = urls.slice(0)
+      .sort((first, second) =>
+        first[sortBy].localeCompare(second[sortBy], 'en', {sensitivity: 'base'})
+      );
 
-    return shortedUrls.map((shortedUrl, index) =>
+    return sortMethod === 'ascend' ? ascendSortedUrls : ascendSortedUrls.reverse();
+  }
+
+  getSortedIndicatorClassName(column) {
+    return column === this.state.sortBy ? `sorted-${this.state.sortMethod}` : '';
+  }
+
+  setSortedBy(columnName) {
+    if (columnName === this.state.sortBy) {
+      this.setState({sortBy: columnName, sortMethod: this.state.sortMethod === 'descend' ? 'ascend' : 'descend'});
+    } else {
+      this.setState({sortBy: columnName});
+    }
+  }
+
+  getShortenedUrlHistory() {
+    const sortedShortedUrls = this.sortUrls(this.props.shortedUrls, this.state.sortBy, this.state.sortMethod);
+
+    return sortedShortedUrls.map((shortedUrl, index) =>
       <div key={index} className="table-row">
         <div className="table-column table-content-cell original-url col-xs-12 col-md-7">
           <a href={shortedUrl.originalUrl} className="url-link">{shortedUrl.originalUrl}</a></div>
@@ -28,13 +51,23 @@ export default class ShortenedUrlHistory extends React.Component {
   }
 
   render() {
-    let shortenedUrls = this.getShortenedUrlHistory();
+    const shortenedUrls = this.getShortenedUrlHistory();
+
     return (
       <div className="table usage-history-table">
         <div className="table-head">
-          <div className="table-column table-head-cell col-md-7">Original Url</div>
-          <div className="table-column table-head-cell col-md-3">Short Url</div>
-          <div className="table-column table-head-cell col-md-2">Created</div>
+          <div className={`table-column table-head-cell col-md-7 ${this.getSortedIndicatorClassName('originalUrl')}`}
+               onClick={() => this.setSortedBy('originalUrl')}>
+            Original Url
+          </div>
+          <div className={`table-column table-head-cell col-md-3 ${this.getSortedIndicatorClassName('shortenedUrl')}`}
+               onClick={() => this.setSortedBy('shortenedUrl')}>
+            Short Url
+          </div>
+          <div className={`table-column table-head-cell col-md-2 ${this.getSortedIndicatorClassName('createdTime')}`}
+               onClick={() => this.setSortedBy('createdTime')}>
+            Created
+          </div>
         </div>
         <div className="table-content">
           {shortenedUrls}
