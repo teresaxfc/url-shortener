@@ -2,7 +2,7 @@ const _ = require('lodash');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const UserService = require('./lib/UserService');
 const User = require('./lib/User');
-const configAuth = require('./auth');
+const config = require('./config');
 
 module.exports = function (passport) {
   const userService = new UserService();
@@ -18,9 +18,9 @@ module.exports = function (passport) {
   });
 
   passport.use(new FacebookStrategy({
-      clientID: configAuth.facebookAuth.clientID,
-      clientSecret: configAuth.facebookAuth.clientSecret,
-      callbackURL: configAuth.facebookAuth.callbackURL,
+      clientID: config.oauth.facebook.clientID,
+      clientSecret: config.oauth.facebook.clientSecret,
+      callbackURL: config.oauth.facebook.callbackURL,
       profileFields: ['id', 'email', 'first_name', 'last_name']
     },
     function (token, refreshToken, profile, done) {
