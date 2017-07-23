@@ -29,9 +29,9 @@ app.use(session({secret: 'shhsecret'}));
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('/logout', function (req, res) {
-  req.logout();
-  res.redirect('/');
+app.get('/logout', function (request, response) {
+  request.logout();
+  response.redirect('/');
 });
 
 app.get('/auth/facebook', passport.authenticate('facebook', {
@@ -51,7 +51,7 @@ app.get('/urls', (request, response) => {
 
   urlService.findByUserId(userId)
     .map(url => Object.assign({}, url, {
-      shortenedUrl: config.webhost + base58.encodeToBase58(url._id)
+      shortenedUrl: `${config.webhost}/${base58.encodeToBase58(url._id)}`
     }))
     .then(urls => response.send(urls))
     .catch((error) => {
