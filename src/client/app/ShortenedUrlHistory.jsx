@@ -51,6 +51,10 @@ export default class ShortenedUrlHistory extends React.Component {
   }
 
   render() {
+    if (this.props.shortedUrls.length === 0) {
+      return null;
+    }
+
     const shortenedUrls = this.getShortenedUrlHistory();
 
     return (

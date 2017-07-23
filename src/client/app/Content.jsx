@@ -31,17 +31,10 @@ export default class Content extends React.Component {
   }
 
   render() {
-    let shortenedUrlHistory;
-    if(this.state.shortedUrls.length === 0 && user === null) {
-      shortenedUrlHistory = '';
-    } else {
-      shortenedUrlHistory = <ShortenedUrlHistory shortedUrls={this.state.shortedUrls}/>;
-    }
-
     return (
       <div className="container content">
         <ShortenUrlForm onShortedUrlCreated={this.onShortedUrlCreated} user={user}/>
-        {shortenedUrlHistory}
+        <ShortenedUrlHistory shortedUrls={this.state.shortedUrls}/>
         <Introduction />
       </div>
     )
