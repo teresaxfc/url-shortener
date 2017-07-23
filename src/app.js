@@ -29,9 +29,9 @@ app.use(session({secret: 'shhsecret'}));
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('/logout', function (req, res) {
-  req.logout();
-  res.redirect('/');
+app.get('/logout', function (request, response) {
+  request.logout();
+  response.redirect('/');
 });
 
 app.get('/auth/facebook', passport.authenticate('facebook', {
