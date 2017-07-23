@@ -51,7 +51,7 @@ app.get('/urls', (request, response) => {
 
   urlService.findByUserId(userId)
     .map(url => Object.assign({}, url, {
-      shortenedUrl: config.webhost + base58.encodeToBase58(url._id)
+      shortenedUrl: `${config.webhost}/${base58.encodeToBase58(url._id)}`
     }))
     .then(urls => response.send(urls))
     .catch((error) => {
