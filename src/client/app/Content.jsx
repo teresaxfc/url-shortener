@@ -3,7 +3,6 @@ import ShortenUrlForm from './ShortenUrlForm.jsx';
 import ShortenedUrlHistory from './ShortenedUrlHistory.jsx';
 import Introduction from './Introduction.jsx';
 import ShortenUrlService from '../lib/ShortenUrlService';
-import './index.sass';
 
 export default class Content extends React.Component {
   constructor(props) {

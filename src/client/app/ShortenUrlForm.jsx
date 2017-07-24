@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import ShortenUrlService from '../lib/ShortenUrlService';
-import './index.sass';
+import './ShortenUrlForm.sass';
 
 export default class ShortenUrlForm extends React.Component {
   constructor(props) {
@@ -55,32 +55,28 @@ export default class ShortenUrlForm extends React.Component {
     let copiedUrl = this.state.copiedUrl;
 
     return (
-      <div className="jumbotron">
-        <h1 className="title text-center">Shorten Your Link Here</h1>
-        <form className="form-inline text-center">
-          <div id="url-shorten-form">
-            <div className="row">
-              <div className="input-field  col-xs-12 col-sm-6 col-sm-offset-1 col-md-7">
-                <input type="text" className="form-control" id="url-field" tabIndex="0"
-                       onKeyDown={this.PressEnterToCreateShortenUrl}
-                       placeholder="Paste a link to shorten it" onChange={this.updateInputValue}
-                       value={this.state.inputValue} ref={(input) => {
-                  this.textInput = input;
-                }}/>
-                <div className="copied-url">{copiedUrl}</div>
-                <div className="error-message"><i>{this.state.error}</i></div>
-              </div>
-              <div className="buttons col-xs-12 col-sm-5 col-md-4">
-                <button type="button" className="btn btn-primary" id="shorten-button"
-                        onClick={this.createShortenedUrl}>
-                  SHORTEN
-                </button>
-                <button type="button" className="btn btn-success" id="copy-button"
-                        onClick={this.copyUrl}>
-                  COPY
-                </button>
-              </div>
-            </div>
+      <div className="jumbotron text-center">
+        <h1>Shorten Your Link Here</h1>
+        <form>
+          <div className="url">
+            <input type="text" className="form-control url-field"
+                   onKeyDown={this.PressEnterToCreateShortenUrl}
+                   placeholder="Paste a link to shorten it" onChange={this.updateInputValue}
+                   value={this.state.inputValue} ref={(input) => {
+              this.textInput = input;
+            }}/>
+            <div className="copied-url">{copiedUrl}</div>
+            <div className="error-message"><i>{this.state.error}</i></div>
+          </div>
+          <div>
+            <button type="button" className="btn btn-primary shorten-button"
+                    onClick={this.createShortenedUrl}>
+              SHORTEN
+            </button>
+            <button type="button" className="btn btn-success copy-button"
+                    onClick={this.copyUrl}>
+              COPY
+            </button>
           </div>
         </form>
       </div>

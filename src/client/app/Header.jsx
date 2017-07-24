@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {ButtonToolbar} from 'react-bootstrap';
 import {DropdownButton} from 'react-bootstrap';
 import {MenuItem} from 'react-bootstrap';
-import './index.sass';
+import './Header.sass';
 
 export default class Header extends React.Component {
   render() {
@@ -26,12 +26,10 @@ export default class Header extends React.Component {
 
     return (
       <div className="container-fluid header">
-        <div className="row">
-          <a href="/" className="logo col-xs-8 col-sm-9 col-sm-offset-1"><h2 className="shorten-logo">ShortEn</h2></a>
-          <ButtonToolbar className="menu col-xs-4 col-sm-1">
-            {this.props.user === null ? userLogin() : userMenu()}
-          </ButtonToolbar>
-        </div>
+        <a href="/" className="shorten-logo">ShortEn</a>
+        <ButtonToolbar className="menu">
+          {this.props.user === null ? userLogin() : userMenu()}
+        </ButtonToolbar>
       </div>
     );
   }
