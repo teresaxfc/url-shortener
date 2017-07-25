@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import moment from 'moment';
-import './index.sass';
+import './ShortenedUrlHistory.sass';
 
 export default class ShortenedUrlHistory extends React.Component {
   constructor(props) {
@@ -39,39 +39,41 @@ export default class ShortenedUrlHistory extends React.Component {
     const sortedShortedUrls = this.sortUrls(this.props.shortedUrls, this.state.sortBy, this.state.sortMethod);
 
     return sortedShortedUrls.map((shortedUrl, index) =>
-      <div key={index} className="table-row">
-        <div className="table-column table-content-cell original-url col-xs-12 col-md-7">
+      <div key={index} className="urls">
+        <div className="original-url">
           <a href={shortedUrl.originalUrl} className="url-link">{shortedUrl.originalUrl}</a></div>
-        <div className="table-column table-content-cell shortened-url col-xs-12 col-md-3">
+        <div className="shortened-url">
           <a href={shortedUrl.shortenedUrl} className="url-link">{shortedUrl.shortenedUrl}</a></div>
-        <div className="table-column table-content-cell created-time col-xs-12 col-md-2">
+        <div className="created">
           {moment(shortedUrl.createdTime).fromNow()}</div>
       </div>
     );
   }
 
   render() {
+    if (this.props.shortedUrls.length === 0) {
+      return null;
+    }
+
     const shortenedUrls = this.getShortenedUrlHistory();
 
     return (
-      <div className="table usage-history-table">
-        <div className="table-head">
-          <div className={`table-column table-head-cell col-md-7 ${this.getSortedIndicatorClassName('originalUrl')}`}
+      <div className="url-history">
+        <div className="url-history-header">
+          <div className={`url-history-header-original ${this.getSortedIndicatorClassName('originalUrl')}`}
                onClick={() => this.setSortedBy('originalUrl')}>
             Original Url
           </div>
-          <div className={`table-column table-head-cell col-md-3 ${this.getSortedIndicatorClassName('shortenedUrl')}`}
+          <div className={`url-history-header-shorten-url ${this.getSortedIndicatorClassName('shortenedUrl')}`}
                onClick={() => this.setSortedBy('shortenedUrl')}>
             Short Url
           </div>
-          <div className={`table-column table-head-cell col-md-2 ${this.getSortedIndicatorClassName('createdTime')}`}
+          <div className={`url-history-header-created ${this.getSortedIndicatorClassName('createdTime')}`}
                onClick={() => this.setSortedBy('createdTime')}>
             Created
           </div>
         </div>
-        <div className="table-content">
-          {shortenedUrls}
-        </div>
+        {shortenedUrls}
       </div>
     );
   }

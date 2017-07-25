@@ -1,0 +1,26 @@
+div.introductions
+  text-align: center
+  margin-top: 5em
+
+div.introduction-title
+  border: 1px solid #e1e1e8
+  margin: 0 0.5em
+  padding: 2em 0.5em
+
+div.introduction-content
+  margin: 0 0.5em 4em 0.5em
+  background-color: #F4F7FA
+  display: -webkit-flex
+  display: flex
+  .introduction-shorten-url, .introduction-statistics, .introduction-user-account
+    -webkit-flex: 1
+    flex: 1
+    margin: 3em 0
+  .glyphicon
+    font-size: 3em
+    color: #F8983F
+
+@media screen and (max-width: 414px)
+  div.introduction-content
+    -webkit-flex-direction: column
+    flex-direction: column

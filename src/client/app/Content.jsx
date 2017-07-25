@@ -3,7 +3,6 @@ import ShortenUrlForm from './ShortenUrlForm.jsx';
 import ShortenedUrlHistory from './ShortenedUrlHistory.jsx';
 import Introduction from './Introduction.jsx';
 import ShortenUrlService from '../lib/ShortenUrlService';
-import './index.sass';
 
 export default class Content extends React.Component {
   constructor(props) {
@@ -31,17 +30,10 @@ export default class Content extends React.Component {
   }
 
   render() {
-    let shortenedUrlHistory;
-    if(this.state.shortedUrls.length === 0 && user === null) {
-      shortenedUrlHistory = '';
-    } else {
-      shortenedUrlHistory = <ShortenedUrlHistory shortedUrls={this.state.shortedUrls}/>;
-    }
-
     return (
       <div className="container content">
         <ShortenUrlForm onShortedUrlCreated={this.onShortedUrlCreated} user={user}/>
-        {shortenedUrlHistory}
+        <ShortenedUrlHistory shortedUrls={this.state.shortedUrls}/>
         <Introduction />
       </div>
     )

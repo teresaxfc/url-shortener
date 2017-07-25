@@ -1,0 +1,70 @@
+div.url-history
+  font-size: 1.1em
+  a
+    text-decoration: none
+
+div.sorted-descend:after
+  content: " ▼"
+
+div.sorted-ascend:after
+  content: " ▲"
+
+div.url-history-header
+  width: 100%
+  height: 2.5em
+  background-color: #F5F8F9
+  font-weight: bold
+  display: -webkit-flex
+  display: flex
+  -webkit-align-items: center
+  align-items: center
+  padding: 0 1em
+  .url-history-header-original
+    -webkit-flex: 7
+    flex: 7
+  .url-history-header-shorten-url
+    -webkit-flex: 2
+    flex: 2
+  .url-history-header-created
+    -webkit-flex: 1
+    flex: 1
+
+div.urls
+  height: 3em
+  border-bottom: solid 1px #E9EAEB
+  display: -webkit-flex
+  display: flex
+  -webkit-align-items: center
+  align-items: center
+  padding: 0 1em
+  &:hover
+    background-color: #F9F9F9
+  .original-url
+    -webkit-flex: 7
+    flex: 7
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
+    padding-right: 0.8em
+  .shortened-url
+    -webkit-flex: 2
+    flex: 2
+  .created
+    -webkit-flex: 1
+    flex: 1
+
+@media screen and (max-width: 1024px)
+  div.url-history-header
+    display: none
+
+  div.urls
+    -webkit-flex-direction: column
+    flex-direction: column
+    -webkit-align-items: flex-start
+    align-items: flex-start
+    border-bottom: solid 1px #E9EAEB
+    .original-url
+      white-space: normal
+    .shortened-url
+      display: none
+
