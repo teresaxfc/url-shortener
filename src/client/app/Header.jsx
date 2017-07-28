@@ -9,9 +9,9 @@ export default class Header extends React.Component {
     const userMenu = () =>
       <DropdownButton title={this.props.user.firstName + ' ' + this.props.user.lastName} id="user-menu"
                       pullRight={true}>
-        <MenuItem href="#">Settings</MenuItem>
-        <MenuItem divider/>
-        <MenuItem href="/logout" className="log-out">Log Out</MenuItem>
+        <MenuItem href="#" id="settings">Settings</MenuItem>
+        <MenuItem divider id="separator"/>
+        <MenuItem href="/logout" id="log-out">Log Out</MenuItem>
       </DropdownButton>;
 
     const userLogin = () =>

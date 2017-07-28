@@ -19,7 +19,7 @@ const urlService = new UrlService();
 
 const app = express();
 app.set('views', `${__dirname}/../views`);
-app.engine('html', ejs.renderFile);
+app.engine('ejs', ejs.renderFile);
 app.use('/static', express.static(path.join(__dirname,'../public')));
 app.use(favicon(path.join(__dirname, '../public', 'favicon.ico')));
 app.use(bodyParser.json());
@@ -43,6 +43,22 @@ app.get('/auth/facebook/callback', passport.authenticate('facebook', {
   failureRedirect: '/'
 }));
 
+app.get('/auth/twitter', passport.authenticate('twitter'));
+
+app.get('/auth/twitter/callback', passport.authenticate('twitter', {
+  successRedirect: '/',
+  failureRedirect: '/'
+}));
+
+app.get('/auth/google', passport.authenticate('google', {
+  scope: ['profile', 'email']
+}));
+
+app.get('/auth/google/callback', passport.authenticate('google', {
+  successRedirect: '/',
+  failureRedirect: '/'
+}));
+
 app.get('/urls', (request, response) => {
   const userId = _.get(request, 'user._id', null);
   if (userId === null) {
@@ -61,7 +77,7 @@ app.get('/urls', (request, response) => {
 });
 
 app.get('/', (request, response) => {
-  response.render('index.html', {user: request.user});
+  response.render('index.ejs', {user: request.user});
 });
 
 app.post('/api/shorten', (request, response) => {
