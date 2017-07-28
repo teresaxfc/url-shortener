@@ -1,0 +1,39 @@
+div.statistics-show
+  display: block
+
+div.statistics-hide
+  display: none
+
+div.statistics-graph
+  display: -webkit-flex
+  display: flex
+  justify-content: center
+  border-bottom: solid 1px #E9EAEB
+  h4
+    text-align: center
+  #clicked-by-day
+    width: 34em
+    height: 34em
+    -webkit-flex: 1
+    flex: 1
+  #clicked-by-hours
+    width: 34em
+    height: 34em
+    -webkit-flex: 1
+    flex: 1
+  #more-statistics
+    font-size: 1.2em
+    font-weight: bold
+    color: #F8983F
+    width: 2em
+    height: 2em
+    -webkit-flex: 0
+    flex: 0
+    align-self: center
+    &:hover
+      text-decoration: underline
+
+@media screen and (max-width: 1024px)
+  div.statistics-graph
+    -webkit-flex-direction: column
+    flex-direction: column

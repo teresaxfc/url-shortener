@@ -19,7 +19,7 @@ const urlService = new UrlService();
 
 const app = express();
 app.set('views', `${__dirname}/../views`);
-app.engine('html', ejs.renderFile);
+app.engine('ejs', ejs.renderFile);
 app.use('/static', express.static(path.join(__dirname,'../public')));
 app.use(favicon(path.join(__dirname, '../public', 'favicon.ico')));
 app.use(bodyParser.json());
@@ -77,7 +77,7 @@ app.get('/urls', (request, response) => {
 });
 
 app.get('/', (request, response) => {
-  response.render('index.html', {user: request.user});
+  response.render('index.ejs', {user: request.user});
 });
 
 app.post('/api/shorten', (request, response) => {

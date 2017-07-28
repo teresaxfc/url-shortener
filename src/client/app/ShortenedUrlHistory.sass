@@ -20,14 +20,18 @@ div.url-history-header
   align-items: center
   padding: 0 1em
   .url-history-header-original
-    -webkit-flex: 7
-    flex: 7
+    -webkit-flex: 6
+    flex: 6
   .url-history-header-shorten-url
     -webkit-flex: 2
     flex: 2
   .url-history-header-created
     -webkit-flex: 1
     flex: 1
+  .url-history-header-statistics
+    -webkit-flex: 1
+    flex: 1
+    text-align: center
 
 div.urls
   height: 3em
@@ -40,8 +44,8 @@ div.urls
   &:hover
     background-color: #F9F9F9
   .original-url
-    -webkit-flex: 7
-    flex: 7
+    -webkit-flex: 6
+    flex: 6
     white-space: nowrap
     overflow: hidden
     text-overflow: ellipsis
@@ -52,6 +56,14 @@ div.urls
   .created
     -webkit-flex: 1
     flex: 1
+  .statistics-handler
+    -webkit-flex: 1
+    flex: 1
+    text-align: center
+
+span.glyphicons-stats
+  width: 1em
+  height: 1em
 
 @media screen and (max-width: 1024px)
   div.url-history-header
